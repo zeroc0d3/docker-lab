@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+
+#-------------------------------------------------------------------
+# RUBY
+#-------------------------------------------------------------------
+  ruby:
+    build:
+      context: .
+    environment:
+      - RUBY_MAJOR=${RUBY_MAJOR}
+      - RUBY_VERSION=${RUBY_VERSION}
+      - RUBY_DOWNLOAD_SHA256=${RUBY_DOWNLOAD_SHA256}
+      - RUBYGEMS_VERSION=${RUBYGEMS_VERSION}
+      - BUNDLER_VERSION=${BUNDLER_VERSION}
+    networks:
+      - backend
+
+#-------------------------------------------------------------------
+# NETWORK SETUP
+#-------------------------------------------------------------------
+networks:
+  backend:
+    driver: "bridge"
+
+#-------------------------------------------------------------------
+# VOLUME SETUP
+#-------------------------------------------------------------------
+volumes:
+  ruby:
+    driver: "local"
