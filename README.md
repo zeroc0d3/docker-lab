@@ -22,6 +22,9 @@ Docker Lab (Learn Docker), this repository is forked from [**Docker Alpine**](ht
   ```
   docker-compose up
   ```
-
+* Running some container only
+  ```
+  docker-compose up nginx ruby postgresql
+  ```
 ## License
 [**MIT License**](https://github.com/zeroc0d3/docker-lab/blob/master/LICENSE)
