@@ -1,11 +1,8 @@
-FROM ruby:latest
-MAINTAINER "Domikado <admin@domikado.com>"
+FROM dockerlab/base-consul:latest
+MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
-ENV RUBY_MAJOR 2.4 \
-    RUBY_VERSION 2.4.2 \
-    RUBY_DOWNLOAD_SHA256 748a8980d30141bd1a4124e11745bb105b436fb1890826e0d2b9ea31af27f735 \
-    RUBYGEMS_VERSION 2.6.13
+RUN apk add --update ruby ruby-irb ruby-rdoc && \
+    rm -rf /var/cache/apk/*
 
-ENV BUNDLER_VERSION 1.15.4
-
-CMD [ "irb" ]
+ENTRYPOINT ["/init"]
+CMD []
