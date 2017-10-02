@@ -206,11 +206,15 @@ volumes:
     driver: "local"
   consul:
     driver: "local"
+  mariadb:
+    driver: "local"
   nginx:
     driver: "local"
   nodejs:
     driver: "local"
   postgresql:
+    driver: "local"
+  redis:
     driver: "local"
   ruby:
     driver: "local"
