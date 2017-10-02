@@ -1,54 +1,54 @@
-version: '3.2'
+version: '3'
 
 services:
 
-#-------------------------------------------
-# BASE
-#-------------------------------------------
-base:
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  environment:
-    #- CONTAINER_HOST=                          # container host (defaut: hostname of the container)
-    #- CONTAINER_RESOLVER=route                 # IP resolver method for container (disable/route/interface, default: route)
-    #- CONTAINER_RESOLVER_INTERFACENAME=eth0    # network interface name for IP resolver (default: eth0)
-    #- CONTAINER_RESOLVER_INTERFACETYPE=inet    # network interface type for IP resolver (inet/inet6, default: inet)
-  networks:
-    - backend
+  #-------------------------------------------
+  # BASE
+  #-------------------------------------------
+  base:
+    build:
+      context: ./base
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    #environment:
+      #- CONTAINER_HOST=                          # container host (defaut: hostname of the container)
+      #- CONTAINER_RESOLVER=route                 # IP resolver method for container (disable/route/interface, default: route)
+      #- CONTAINER_RESOLVER_INTERFACENAME=eth0    # network interface name for IP resolver (default: eth0)
+      #- CONTAINER_RESOLVER_INTERFACETYPE=inet    # network interface type for IP resolver (inet/inet6, default: inet)
 
-#-------------------------------------------
-# BASE-CONSUL
-#-------------------------------------------
-base-consul:
-  build:
-    context: ./base-consul
-  ports:
-    - "1234:1234"
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  environment:
-    - CONSUL_AGENT=172.16.0.1                                     # agent hostname
-    - CONSUL_PORT=8500                                            # agent port
-    - CONSUL_TLS=0                                                # enable TLS
-    - CONSUL_SERVICENAME=base-consul                              # service name to register
-    - CONSUL_SERVICEPORT=1234                                     # service port
-  networks:
-    - backend
+  #-------------------------------------------
+  # BASE-CONSUL
+  #-------------------------------------------
+  base-consul:
+    build:
+      context: ./base-consul
+    ports:
+      - "1234:1234"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - CONSUL_AGENT=172.16.0.1                                     # agent hostname
+      - CONSUL_PORT=8500                                            # agent port
+      - CONSUL_TLS=0                                                # enable TLS
+      - CONSUL_SERVICENAME=base-consul                              # service name to register
+      - CONSUL_SERVICEPORT=1234                                     # service port
+    networks:
+      - backend
 
-#-------------------------------------------
-# CONSUL
-#-------------------------------------------
-consul:
-  build:
-    context: ./consul
-  ports:
-    - "8500:8500"
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  environment:
-    - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
-  networks:
-    - backend
+  #-------------------------------------------
+  # CONSUL
+  #-------------------------------------------
+  consul:
+    build:
+      context: ./consul
+    ports:
+      - "8500:8500"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
+    networks:
+      - backend
 
 #-------------------------------------------
 # NGINX
@@ -128,8 +128,6 @@ consul:
       - CONSUL_RUBY_AGENT=consul                  # consul agent hostname/IP
       #- CONSUL_RUBY_PORT=8500                    # consul agent port
       #- CONSUL_RUBY_KEYPREFIX=path/prefix/       # consul key prefix path
-    network_mode:
-      - host
     networks:
       - backend
 
