@@ -1,5 +1,5 @@
 # Docker-Lab
-Docker Lab (Learn Docker), this repository is forked from [**Docker Alpine**](https://github.com/bhuisgen/docker-alpine).
+Docker Lab (Learn Docker), this repository inspired from [**Docker Alpine**](https://github.com/bhuisgen/docker-alpine).
 
 ## Features
 Dynamic environments for:
