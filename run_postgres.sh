@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker run -it domikadolab/postgres
+docker run -it dockerlab/postgresql

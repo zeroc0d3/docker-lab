@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker run -it domikadolab/nginx
+docker run -it dockerlab/nginx

@@ -1,2 +1,27 @@
-# docker-lab
-Docker Lab (Learn Docker)
+# Docker-Lab
+Docker Lab (Learn Docker), this repository is forked from [**Docker Alpine**](https://github.com/bhuisgen/docker-alpine)
+
+
+## Build All (Shortcut)
+```
+./build_all.sh
+```
+
+## Docker Compose
+* Copy `.env.example` to `.env`
+* Copy `docker-compose.skeleton.yml` to `docker-compose.yml`
+* Build & running
+  ```
+  docker-compose build && docker-compose up
+  ```
+* Force recreate container
+  ```
+  docker-compose build && docker-compose up --force-recreate
+  ```
+* Running container only
+  ```
+  docker-compose up
+  ```
+
+## License
+[**MIT License**](https://github.com/zeroc0d3/docker-lab/blob/master/LICENSE)

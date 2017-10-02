@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker run -it domikadolab/ruby
+docker run -it dockerlab/ruby
