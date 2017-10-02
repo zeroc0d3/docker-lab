@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv sh
+
+if [ ! -z ${NGINX_TEMPLATE} ]; then
+    echo "==> Enabling nginx template '${NGINX_TEMPLATE}'"
+
+    cp "/etc/consul-template/templates/nginx/${NGINX_TEMPLATE}.conf" /etc/consul-template/conf-services.d/10-nginx.conf
+fi

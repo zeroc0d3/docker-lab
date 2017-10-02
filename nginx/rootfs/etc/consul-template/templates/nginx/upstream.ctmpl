@@ -1,0 +1,230 @@
+{{- $nginx_worker_processes := env "NGINX_WORKERPROCESSES" -}}
+{{- $nginx_worker_connections := env "NGINX_WORKERCONNECTIONS" -}}
+{{- $nginx_worker_rlimit_nofile := env "NGINX_WORKERRLIMITNOFILE" -}}
+{{- $nginx_keepalive_timeout := env "NGINX_KEEPALIVETIMEOUT" -}}
+{{- $nginx_keepalive_requests := env "NGINX_KEEPALIVEREQUESTS" -}}
+{{- $nginx_reset_timedout_connection := env "NGINX_RESETTIMEDOUTCONNECTION" -}}
+{{- $nginx_client_header_timeout := env "NGINX_CLIENTHEADERTIMEOUT" -}}
+{{- $nginx_client_body_timeout := env "NGINX_CLIENTBODYTIMEOUT" -}}
+{{- $nginx_send_timeout := env "NGINX_SENDTIMEOUT" -}}
+{{- $nginx_client_header_buffer_size := env "NGINX_CLIENTHEADERBUFFERSIZE" -}}
+{{- $nginx_large_client_header_buffers := env "NGINX_LARGECLIENTHEADERBUFFERS" -}}
+{{- $nginx_client_body_buffer_size := env "NGINX_CLIENTBODYBUFFERSIZE" -}}
+{{- $nginx_client_max_body_size := env "NGINX_CLIENTMAXBODYSIZE" -}}
+{{- $nginx_access_log := env "NGINX_ACCESSLOG" -}}
+{{- $nginx_include_conf := env "NGINX_INCLUDECONF" -}}
+{{- $nginx_reuseport := env "NGINX_REUSEPORT" -}}
+{{- $nginx_ssl := env "NGINX_SSL" -}}
+{{- $nginx_ssl_http2 := env "NGINX_SSLHTTP2" -}}
+{{- $nginx_ssl_certificate := env "NGINX_SSLCERTIFICATE" -}}
+{{- $nginx_ssl_certificate_key := env "NGINX_SSLCERTIFICATEKEY" -}}
+{{- $nginx_ssl_dhparam := env "NGINX_SSLDHPARAM" -}}
+{{- $nginx_ssl_protocols := env "NGINX_SSLPROTOCOLS" -}}
+{{- $nginx_ssl_ciphers := env "NGINX_SSLCIPHERS" -}}
+{{- $nginx_ssl_redirect := env "NGINX_SSLREDIRECT" -}}
+{{- $nginx_open_file_cache := env "NGINX_OPENFILECACHE" -}}
+{{- $nginx_gzip := env "NGINX_GZIP" -}}
+{{- $nginx_expire := env "NGINX_EXPIRE" -}}
+{{- $nginx_expire_delay := env "NGINX_EXPIREDELAY" -}}
+{{- $nginx_expire_access_log := env "NGINX_EXPIREACCESSLOG" -}}
+{{- $nginx_status := env "NGINX_STATUS" -}}
+{{- $nginx_status_location := env "NGINX_STATUSLOCATION" -}}
+{{- $nginx_status_allow := env "NGINX_STATUSALLOW" -}}
+{{- $name := env "NGINX_TEMPLATE_UPSTREAM_SERVICENAME" -}}
+{{- $tag := env "NGINX_TEMPLATE_UPSTREAM_SERVICETAG" -}}
+{{- $nginx_server_name := env "NGINX_TEMPLATE_UPSTREAM_SERVERNAME" -}}
+{{- $nginx_root := env "NGINX_TEMPLATE_UPSTREAM_ROOT" -}}
+{{- $nginx_index := env "NGINX_TEMPLATE_UPSTREAM_INDEX" -}}
+{{- $nginx_proxy_buffering := env "NGINX_TEMPLATE_UPSTREAM_PROXYBUFFERING" -}}
+{{- $nginx_proxy_connect_timeout := env "NGINX_TEMPLATE_UPSTREAM_PROXYCONNECTTIMEOUT" -}}
+{{- $nginx_proxy_read_timeout := env "NGINX_TEMPLATE_UPSTREAM_PROXYREADTIMEOUT" -}}
+{{- $nginx_proxy_send_timeout := env "NGINX_TEMPLATE_UPSTREAM_PROXYSENDTIMEOUT" -}}
+{{- $nginx_proxy_gzip := env "NGINX_TEMPLATE_UPSTREAM_PROXYGZIP" -}}
+{{- $nginx_proxy_access_log := env "NGINX_TEMPLATE_UPSTREAM_PROXYACCESSLOG" -}}
+{{- $nginx_upstream_method := env "NGINX_TEMPLATE_UPSTREAM_UPSTREAMMETHOD" -}}
+{{- $nginx_upstream_keepalive := env "NGINX_TEMPLATE_UPSTREAM_UPSTREAMKEEPALIVE" -}}
+{{- $nginx_upstream_weight := env "NGINX_TEMPLATE_UPSTREAM_UPSTREAMWEIGHT" -}}
+{{- $nginx_upstream_max_conns := env "NGINX_TEMPLATE_UPSTREAM_UPSTREAMMAXCONNS" -}}
+{{- $nginx_upstream_max_fails := env "NGINX_TEMPLATE_UPSTREAM_UPSTREAMMAXFAILS" -}}
+{{- $nginx_upstream_fail_timeout := env "NGINX_TEMPLATE_UPSTREAM_UPSTREAMFAILTIMEOUT" -}}
+daemon off;
+user nginx;
+worker_processes {{if $nginx_worker_processes}}{{$nginx_worker_processes}}{{else}}1{{end}};
+{{if $nginx_worker_rlimit_nofile}}worker_rlimit_nofile {{$nginx_worker_rlimit_nofile}};{{end}}
+pid  /var/run/nginx.pid;
+pcre_jit on;
+include /etc/nginx/modules/*.conf;
+
+events {
+    worker_connections {{if $nginx_worker_connections}}{{$nginx_worker_connections}}{{else}}1024{{end}};
+    use epoll;
+    multi_accept on;
+}
+
+http {
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+
+    keepalive_timeout {{if $nginx_keepalive_timeout}}{{$nginx_keepalive_timeout}}{{else}}75{{end}};
+    keepalive_requests {{if $nginx_keepalive_requests}}{{$nginx_keepalive_requests}}{{else}}100{{end}};
+
+    reset_timedout_connection {{if $nginx_reset_timedout_connection}}{{$nginx_reset_timedout_connection}}{{else}}off{{end}};
+    client_header_timeout {{if $nginx_client_header_timeout}}{{$nginx_client_header_timeout}}{{else}}60s{{end}};
+    client_body_timeout {{if $nginx_client_body_timeout}}{{$nginx_client_body_timeout}}{{else}}60s{{end}};
+    send_timeout {{if $nginx_send_timeout}}{{$nginx_send_timeout}}{{else}}60s{{end}};
+
+    client_header_buffer_size {{if $nginx_client_header_buffer_size}}{{$nginx_client_header_buffer_size}}{{else}}1k{{end}};
+    large_client_header_buffers {{if $nginx_large_client_header_buffers}}{{$nginx_large_client_header_buffers}}{{else}}4 8k{{end}};
+    client_body_buffer_size {{if $nginx_client_body_buffer_size}}{{$nginx_client_body_buffer_size}}{{else}}8k{{end}};
+    client_max_body_size {{if $nginx_client_max_body_size}}{{$nginx_client_max_body_size}}{{else}}1m{{end}};
+
+    types_hash_max_size 2048;
+    server_tokens off;
+    # server_names_hash_bucket_size 64;
+    # server_name_in_redirect off;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+    log_format upstream '$remote_addr - $remote_user [$time_local] '
+                            '"$request" $status $body_bytes_sent '
+                            '"$http_referer" "$http_user_agent" '
+                            'rt=$request_time uct="$upstream_connect_time" uht="$upstream_header_time" urt="$upstream_response_time"';
+
+    {{if eq $nginx_access_log "1"}}
+    access_log /dev/stdout main;
+    {{else}}
+    access_log off;
+    {{end}}
+    error_log stderr warn;
+
+    {{if eq $nginx_include_conf "1"}}
+    include /etc/nginx/conf.d/*.conf;
+    {{end}}
+
+    upstream app {
+        {{if $nginx_upstream_method}}{{$nginx_upstream_method}};{{end}}
+        {{if $nginx_upstream_keepalive}}keepalive {{$nginx_upstream_keepalive}};{{end}}
+
+        {{range service (print $tag "." $name)}}
+        server {{.Address}}:{{.Port}}{{if $nginx_upstream_weight}} weight={{$nginx_upstream_weight}}{{end}}{{if $nginx_upstream_max_conns}} max_conns={{$nginx_upstream_max_conns}}{{end}}{{if $nginx_upstream_max_fails}} max_fails={{$nginx_upstream_max_fails}}{{end}}{{if $nginx_upstream_fail_timeout}} fail_timeout={{$nginx_upstream_fail_timeout}}{{end}};
+        {{else}}
+        server 127.0.0.1:80 down;
+        {{end}}
+    }
+
+    server {
+        listen 80{{if eq $nginx_reuseport "1"}} reuseport{{end}};
+        listen [::]:80{{if eq $nginx_reuseport "1"}} reuseport{{end}};
+
+        {{if eq $nginx_ssl "1"}}
+        listen 443{{if eq $nginx_reuseport "1"}} reuseport{{end}} ssl{{if eq $nginx_ssl_http2 "1"}} http2{{end}};
+        listen [::]:443{{if eq $nginx_reuseport "1"}} reuseport{{end}} ssl{{if eq $nginx_ssl_http2 "1"}} http2{{end}};
+
+        ssl_certificate {{$nginx_ssl_certificate}};
+        ssl_certificate_key {{$nginx_ssl_certificate_key}};
+        ssl_dhparam {{$nginx_ssl_dhparam}};
+        ssl_protocols {{if $nginx_ssl_protocols}}{{$nginx_ssl_protocols}}{{else}}TLSv1 TLSv1.1 TLSv1.2{{end}};
+        ssl_prefer_server_ciphers on;
+        ssl_ciphers {{if $nginx_ssl_ciphers}}{{$nginx_ssl_ciphers}}{{else}}EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH{{end}};
+        ssl_ecdh_curve secp384r1;
+        ssl_session_cache shared:SSL:10m;
+        ssl_session_tickets off;
+        {{end}}
+
+        {{if eq $nginx_open_file_cache "1"}}
+        open_file_cache max=1000 inactive=20s;
+        open_file_cache_valid 30s;
+        open_file_cache_min_uses 2;
+        open_file_cache_errors on;
+        {{end}}
+
+        {{if eq $nginx_gzip "1"}}
+        gzip on;
+        gzip_disable "msie6";
+        gzip_vary on;
+        gzip_proxied off;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+        {{end}}
+
+        server_name {{if $nginx_server_name}}{{$nginx_server_name}}{{else}}""{{end}};
+        root {{if $nginx_root}}{{$nginx_root}}{{else}}/var/www{{end}};
+        index {{if $nginx_index}}{{$nginx_index}}{{else}}index.html{{end}};
+
+        {{if eq $nginx_status "1"}}
+        location {{if $nginx_status_location}}{{$nginx_status_location}}{{else}}/nginx_status{{end}} {
+            stub_status on;
+            access_log off;
+            {{if $nginx_status_allow}}
+            {{range $address := $nginx_status_allow | split ","}}
+            allow {{$address}};
+            {{end}}
+            {{else}}
+            allow 127.0.0.1;
+            {{end}}
+            deny all;
+        }
+        {{end}}
+
+        {{if and (eq $nginx_ssl "1") (eq $nginx_ssl_redirect "1")}}
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+
+        if ($scheme != "https") {
+            rewrite ^ https://$host$uri permanent;
+        }
+        {{end}}
+
+        {{if eq $nginx_expire "1"}}
+        location ~* \.(woff|eot|ttf|svg|mp4|webm|jpg|jpeg|png|gif|ico|css|js)$ {
+            expires {{if $nginx_expire_delay}}{{$nginx_expire_delay}}{{else}}1d{{end}};
+            add_header Pragma public;
+            add_header Cache-Control "public";
+            {{if eq $nginx_expire_access_log "0"}}access_log off;{{end}}
+        }
+        {{end}}
+
+        location / {
+            try_files $uri @upstream
+        }
+
+        location @upstream {
+            proxy_pass http://app;
+            proxy_buffering {{if $nginx_proxy_buffering}}{{$nginx_proxy_buffering}}{{else}}on{{end}};
+            proxy_connect_timeout {{if $nginx_proxy_connect_timeout}}{{$nginx_proxy_connect_timeout}}{{else}}60s{{end}};
+            proxy_read_timeout {{if $nginx_proxy_read_timeout}}{{$nginx_proxy_read_timeout}}{{else}}60s{{end}};
+            proxy_send_timeout {{if $nginx_proxy_send_timeout}}{{$nginx_proxy_send_timeout}}{{else}}60s{{end}};
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            {{if eq $nginx_proxy_gzip "1"}}
+            gzip on;
+            gzip_disable "msie6";
+            gzip_vary on;
+            gzip_proxied any;
+            gzip_comp_level 6;
+            gzip_buffers 16 8k;
+            gzip_http_version 1.1;
+            gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+            {{end}}
+
+            {{if eq $nginx_proxy_access_log "1"}}
+            access_log /dev/stdout upstream;
+            {{else}}
+            access_log off;
+            {{end}}
+        }
+    }
+}
