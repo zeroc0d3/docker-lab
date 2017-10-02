@@ -24,7 +24,7 @@ Docker Lab (Learn Docker), this repository is forked from [**Docker Alpine**](ht
   ```
 * Running some container only
   ```
-  docker-compose up nginx ruby postgresql
+  docker-compose up consul nginx ruby postgresql mariadb redis
   ```
 ## License
 [**MIT License**](https://github.com/zeroc0d3/docker-lab/blob/master/LICENSE)

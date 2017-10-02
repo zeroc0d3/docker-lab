@@ -2,23 +2,23 @@ version: '3'
 
 services:
 
-  #-------------------------------------------
-  # BASE
-  #-------------------------------------------
+#-------------------------------------------
+# BASE
+#-------------------------------------------
   base:
     build:
       context: ./base
     volumes:
       - /etc/localtime:/etc/localtime:ro
     #environment:
-      #- CONTAINER_HOST=                          # container host (defaut: hostname of the container)
-      #- CONTAINER_RESOLVER=route                 # IP resolver method for container (disable/route/interface, default: route)
-      #- CONTAINER_RESOLVER_INTERFACENAME=eth0    # network interface name for IP resolver (default: eth0)
-      #- CONTAINER_RESOLVER_INTERFACETYPE=inet    # network interface type for IP resolver (inet/inet6, default: inet)
+      #- CONTAINER_HOST=                                   # container host (defaut: hostname of the container)
+      #- CONTAINER_RESOLVER=route                          # IP resolver method for container (disable/route/interface, default: route)
+      #- CONTAINER_RESOLVER_INTERFACENAME=eth0             # network interface name for IP resolver (default: eth0)
+      #- CONTAINER_RESOLVER_INTERFACETYPE=inet             # network interface type for IP resolver (inet/inet6, default: inet)
 
-  #-------------------------------------------
-  # BASE-CONSUL
-  #-------------------------------------------
+#-------------------------------------------
+# BASE-CONSUL
+#-------------------------------------------
   base-consul:
     build:
       context: ./base-consul
@@ -27,17 +27,17 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - CONSUL_AGENT=172.16.0.1                                       # agent hostname
-      - CONSUL_PORT=8500                                              # agent port
-      - CONSUL_TLS=0                                                  # enable TLS
-      - CONSUL_SERVICENAME=${CONSUL_SERVICENAME}                      # service name to register
-      - CONSUL_SERVICEPORT=1234                                       # service port
+      - CONSUL_AGENT=172.16.0.1                            # agent hostname
+      - CONSUL_PORT=8500                                   # agent port
+      - CONSUL_TLS=0                                       # enable TLS
+      - CONSUL_SERVICENAME=${CONSUL_SERVICENAME}           # service name to register
+      - CONSUL_SERVICEPORT=1234                            # service port
     networks:
       - backend
 
-  #-------------------------------------------
-  # CONSUL
-  #-------------------------------------------
+#-------------------------------------------
+# CONSUL
+#-------------------------------------------
   consul:
     build:
       context: ./consul
@@ -47,6 +47,38 @@ services:
       - /etc/localtime:/etc/localtime:ro
     environment:
       - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
+    networks:
+      - backend
+
+#-------------------------------------------
+# MARIADB
+#-------------------------------------------
+  mariadb:
+    depends_on:
+      - consul
+    build:
+      context: ./mariadb
+    ports:
+      - "${MARIADB_PORT}:3306"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA_SAVE}/mariadb:/var/lib/mysql                # volume for data
+    environment:
+      - CONSUL_MARIADB_AGENT=${CONSUL_MARIADB_AGENT}       # consul agent hostname/IP
+      #- CONSUL_MARIADB_PORT=8500                          # consul agent port
+      #- CONSUL_MARIADB_KEYPREFIX=path/prefix/             # consul key prefix path
+      - CONSUL_MARIADB_SERVICENAME=mariadb                 # consul service name
+      - CONSUL_MARIADB_SERVICETAGS=dev                     # consul service tag
+      - CONSUL_MARIADB_SERVICEPORT=3306                    # consul service port
+      - CONSUL_MARIADB_CHECKTYPE=tcp                       # consul health check type
+      #- MARIADB_PROFILE=my-small                          # default configuration profile to use (my-small, my-medium ...)
+      - MARIADB_ROOTPASSWORD=${MARIADB_ROOTPASSWORD}       # root password
+      #- MARIADB_ROOTHOSTMASK=${MARIADB_ROOTHOSTMASK}      # root user hostmask (optional)
+      - MARIADB_DATABASE=${MARIADB_DATABASE}               # create database (optional)
+      - MARIADB_USERNAME=${MARIADB_USERNAME}               # grant user name (optional)
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}               # grant user password (optional)
+      - MARIADB_HOSTMASK=${MARIADB_HOSTMASK}               # grant user hostmask (optional)
+      #- MARIADB_CONFIGSCRIPT=${MARIADB_CONFIGSCRIPT}      # custom configuration script
     networks:
       - backend
 
@@ -63,14 +95,14 @@ services:
       - "${NGINX_SSL_PORT}:443"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_SAVE}/nginx:/var/cache/nginx                           # volume for nginx cache
-      - ${DATA_SAVE}/www:/var/www                                     # volume for data
+      - ${DATA_SAVE}/nginx:/var/cache/nginx                          # volume for nginx cache
+      - ${DATA_SAVE}/www:/var/www                                    # volume for data
     environment:
-      - CONSUL_NGINX_AGENT=consul                                     # consul agent hostname/IP
-      - CONSUL_NGINX_SERVICENAME=nginx                                # consul service name
-      - CONSUL_NGINX_SERVICETAGS=dev                                  # consul service tag
-      - CONSUL_NGINX_SERVICEPORT=${CONSUL_NGINX_SERVICEPORT}          # consul service port
-      - CONSUL_NGINX_CHECKTYPE=tcp                                    # consul health check type
+      - CONSUL_NGINX_AGENT=consul                                    # consul agent hostname/IP
+      - CONSUL_NGINX_SERVICENAME=nginx                               # consul service name
+      - CONSUL_NGINX_SERVICETAGS=dev                                 # consul service tag
+      - CONSUL_NGINX_SERVICEPORT=${CONSUL_NGINX_SERVICEPORT}         # consul service port
+      - CONSUL_NGINX_CHECKTYPE=tcp                                   # consul health check type
     networks:
       - frontend
       - backend
@@ -97,20 +129,44 @@ services:
       - "${POSTGRESQL_PORT}:5432"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_SAVE}/postgres:/var/lib/postgresql                     # volume for data
+      - ${DATA_SAVE}/postgres:/var/lib/postgresql                    # volume for data
     environment:
-      - CONSUL_POSTGRES_AGENT=consul                                  # consul agent hostname/IP
-      #- CONSUL_POSTGRES_PORT=8500                                    # consul agent port
-      #- CONSUL_POSTGRES_KEYPREFIX=path/prefix/                       # consul key prefix path
-      - CONSUL_POSTGRES_SERVICENAME=postgresql                        # consul service name
-      - CONSUL_POSTGRES_SERVICETAGS=dev                               # consul service tag
-      - CONSUL_POSTGRES_SERVICEPORT=${CONSUL_POSTGRES_SERVICEPORT}    # consul service port
-      - CONSUL_POSTGRES_CHECKTYPE=tcp                                 # consul health check type
-      - POSTGRESQL_DATABASE=mydb                                      # create database (optional)
-      - POSTGRESQL_USERNAME=mariadb                                   # grant user name (optional)
-      - POSTGRESQL_PASSWORD=mariadb                                   # grant user password (optional)
-      - POSTGRESQL_ADDRESS=172.16.0.0/12                              # grant user address (optional)
-      #- POSTGRESQL_CONFIGSCRIPT=/root/postgresql/config.sh           # custom configuration script
+      - CONSUL_POSTGRES_AGENT=consul                                 # consul agent hostname/IP
+      #- CONSUL_POSTGRES_PORT=8500                                   # consul agent port
+      #- CONSUL_POSTGRES_KEYPREFIX=path/prefix/                      # consul key prefix path
+      - CONSUL_POSTGRES_SERVICENAME=postgresql                       # consul service name
+      - CONSUL_POSTGRES_SERVICETAGS=dev                              # consul service tag
+      - CONSUL_POSTGRES_SERVICEPORT=${CONSUL_POSTGRES_SERVICEPORT}   # consul service port
+      - CONSUL_POSTGRES_CHECKTYPE=tcp                                # consul health check type
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}                   # create database (optional)
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}                   # grant user name (optional)
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}                   # grant user password (optional)
+      - POSTGRESQL_ADDRESS=${POSTGRESQL_ADDRESS}                     # grant user address (optional)
+      #- POSTGRESQL_CONFIGSCRIPT=${POSTGRESQL_CONFIGSCRIPT}          # custom configuration script
+    networks:
+      - backend
+
+#-------------------------------------------------------------------
+# REDIS
+#-------------------------------------------------------------------
+  redis:
+    depends_on:
+      - consul
+    build:
+      context: ./redis
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA_SAVE}/redis:/var/lib/redis                  # volume for data
+    environment:
+      - CONSUL_REDIS_AGENT=consul                          # consul agent hostname/IP
+      #- CONSUL_REDIS_PORT=8500                            # consul agent port
+      #- CONSUL_REDIS_KEYPREFIX=path/prefix/               # consul key prefix path
+      - CONSUL_REDIS_SERVICENAME=redis                     # consul service name
+      - CONSUL_REDIS_SERVICETAGS=dev                       # consul service tag
+      - CONSUL_REDIS_SERVICEPORT=6379                      # consul service port
+      - CONSUL_REDIS_CHECKTYPE=tcp                         # consul health check type
     networks:
       - backend
 
@@ -125,9 +181,9 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - CONSUL_RUBY_AGENT=consul                  # consul agent hostname/IP
-      #- CONSUL_RUBY_PORT=8500                    # consul agent port
-      #- CONSUL_RUBY_KEYPREFIX=path/prefix/       # consul key prefix path
+      - CONSUL_RUBY_AGENT=consul                           # consul agent hostname/IP
+      #- CONSUL_RUBY_PORT=8500                             # consul agent port
+      #- CONSUL_RUBY_KEYPREFIX=path/prefix/                # consul key prefix path
     networks:
       - backend
 

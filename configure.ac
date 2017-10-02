@@ -40,9 +40,11 @@ AC_CONFIG_FILES([
     base/Makefile
     base-consul/Makefile
     consul/Makefile
+    mariadb/Makefile
     nginx/Makefile
     nodejs/Makefile
     postgresql/Makefile
+    redis/Makefile
     ruby/Makefile
 ])
 

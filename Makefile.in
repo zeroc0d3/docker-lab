@@ -282,9 +282,11 @@ SUBDIRS = \
     base \
     base-consul \
 		consul \
+		mariadb \
 		nginx \
 		nodejs \
 		postgresql \
+		redis \
 		ruby
 
 all: all-recursive
