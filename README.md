@@ -26,6 +26,10 @@ Dynamic environments for:
   ```
   docker-compose build && docker-compose up --force-recreate
   ```
+* Force recreate some container
+  ```
+  docker-compose build && docker-compose up --force-recreate consul nginx ruby postgresql mariadb redis
+  ```
 * Running container only
   ```
   docker-compose up
