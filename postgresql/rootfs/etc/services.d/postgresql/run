@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+exec s6-setuidgid postgres /usr/bin/postgres ${POSTGRESQL_OPTIONS}

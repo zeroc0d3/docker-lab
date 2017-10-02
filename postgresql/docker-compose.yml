@@ -1,0 +1,34 @@
+version: '3.2'
+
+services:
+  consul:
+    image: dockerlab/consul
+    ports:
+      - "8500:8500"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
+
+  postgresql:
+    depends_on:
+      - consul
+    image: dockerlab/postgresql
+    ports:
+      - "5432:5432"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      #- /host/data:/var/lib/postgresql                       # volume for data
+    environment:
+      - CONSUL_AGENT=consul                                   # consul agent hostname/IP
+      #- CONSUL_PORT=8500                                     # consul agent port
+      #- CONSUL_KEYPREFIX=path/prefix/                        # consul key prefix path
+      - CONSUL_SERVICENAME=postgresql                         # consul service name
+      - CONSUL_SERVICETAGS=dev                                # consul service tag
+      - CONSUL_SERVICEPORT=5432                               # consul service port
+      - CONSUL_CHECKTYPE=tcp                                  # consul health check type
+      - POSTGRESQL_DATABASE=mydb                              # create database (optional)
+      - POSTGRESQL_USERNAME=mariadb                           # grant user name (optional)
+      - POSTGRESQL_PASSWORD=mariadb                           # grant user password (optional)
+      - POSTGRESQL_ADDRESS=172.16.0.0/12                      # grant user address (optional)
+      #- POSTGRESQL_CONFIGSCRIPT=/root/postgresql/config.sh   # custom configuration script
