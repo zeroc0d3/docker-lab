@@ -30,7 +30,7 @@ services:
       - CONSUL_AGENT=172.16.0.1                                       # agent hostname
       - CONSUL_PORT=8500                                              # agent port
       - CONSUL_TLS=0                                                  # enable TLS
-      - CONSUL_SERVICENAME=base-consul                                # service name to register
+      - CONSUL_SERVICENAME=${CONSUL_SERVICENAME}                      # service name to register
       - CONSUL_SERVICEPORT=1234                                       # service port
     networks:
       - backend
@@ -42,7 +42,7 @@ services:
     build:
       context: ./consul
     ports:
-      - "8500:8500"
+      - "${CONSUL_PORT}:8500"
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
