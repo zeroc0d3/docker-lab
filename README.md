@@ -1,6 +1,14 @@
 # Docker-Lab
-Docker Lab (Learn Docker), this repository is forked from [**Docker Alpine**](https://github.com/bhuisgen/docker-alpine)
+Docker Lab (Learn Docker), this repository is forked from [**Docker Alpine**](https://github.com/bhuisgen/docker-alpine).
 
+## Features
+Dynamic environments for:
+* Consul
+* MariaDB
+* Nginx
+* NodeJS
+* PostgreSQL
+* Ruby
 
 ## Build All (Shortcut)
 ```
