@@ -522,10 +522,13 @@ do
   case $ac_config_target in
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "base/Makefile") CONFIG_FILES="$CONFIG_FILES base/Makefile" ;;
+    "base-consul/Makefile") CONFIG_FILES="$CONFIG_FILES base-consul/Makefile" ;;
     "consul/Makefile") CONFIG_FILES="$CONFIG_FILES consul/Makefile" ;;
+    "mariadb/Makefile") CONFIG_FILES="$CONFIG_FILES mariadb/Makefile" ;;
     "nginx/Makefile") CONFIG_FILES="$CONFIG_FILES nginx/Makefile" ;;
     "nodejs/Makefile") CONFIG_FILES="$CONFIG_FILES nodejs/Makefile" ;;
     "postgresql/Makefile") CONFIG_FILES="$CONFIG_FILES postgresql/Makefile" ;;
+    "redis/Makefile") CONFIG_FILES="$CONFIG_FILES redis/Makefile" ;;
     "ruby/Makefile") CONFIG_FILES="$CONFIG_FILES ruby/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
