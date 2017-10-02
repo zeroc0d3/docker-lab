@@ -1,0 +1,81 @@
+#!/usr/bin/with-contenv sh
+
+if [ -z "${MARIADB_CONFIG}" ]; then
+    if [ -z "${MARIADB_CONFIGSCRIPT}" ]; then
+        echo "==> Configuring mariadb from environment"
+
+        if [ -z "${MARIADB_PROFILE}" ]; then
+            MARIADB_PROFILE="my-small"
+        fi
+
+        if [ ! -f "/usr/share/mysql/${MARIADB_PROFILE}.cnf" ]; then
+            echo "Configuration profile has not been found, aborting" >&2
+            exit 1
+        fi
+
+        if [ -z "${MARIADB_ROOTPASSWORD}" ]; then
+            echo "MARIADB_ROOTPASSWORD is not set, aborting" >&2
+            exit 2
+        fi
+
+        if [ ! -z "${MARIADB_ROOTHOSTMASK}" ]; then
+            MARIADB_ROOTHOSTMASK=%
+        fi
+
+        cp "/usr/share/mysql/${MARIADB_PROFILE}.cnf" /etc/mysql/my.cnf
+        echo "" >> /etc/mysql/my.cnf
+        echo "!includedir /etc/mysql/conf.d/" >> /etc/mysql/my.cnf
+
+        mkdir -p /var/run/mysqld
+        chown -R mysql:root /var/run/mysqld
+        mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --console
+
+        /usr/bin/mysqld_safe --skip-networking &
+
+        for i in {30..0}; do
+            mysql --protocol=socket -u root --protocol=socket -e "SELECT 1" > /dev/null 2>&1
+            if [ $! -eq 0 ]; then
+                break
+            fi
+
+            sleep 1
+        done
+
+        if [ "$i" = 0 ]; then
+            echo "Failed to initialize server, aborting" >&2
+            exit 3
+        fi
+
+        mysql -u root --protocol=socket -e " \
+            SET @@SESSION.SQL_LOG_BIN=0; \
+            DELETE FROM mysql.user; \
+            CREATE USER 'root'@'%' IDENTIFIED BY '${MARIADB_ROOTPASSWORD}'; \
+            GRANT ALL ON *.* TO 'root'@'${MARIADB_ROOTHOSTMASK}' WITH GRANT OPTION; \
+            DROP DATABASE IF EXISTS test; \
+            FLUSH PRIVILEGES; \
+            "
+
+        if [ ! -z "${MARIADB_DATABASE}" ] && [ ! -z "${MARIADB_USERNAME}" ] && [ ! -z "${MARIADB_PASSWORD}" ] && [ ! -z "${MARIADB_HOSTMASK}" ]; then
+            mysql -u root -p"${MARIADB_ROOTPASSWORD}" --protocol=socket -e " \
+                SET @@SESSION.SQL_LOG_BIN=0; \
+                CREATE DATABASE \`${MARIADB_DATABASE}\`; \
+                CREATE USER '${MARIADB_USERNAME}'@'${MARIADB_HOSTMASK}' IDENTIFIED BY '${MARIADB_PASSWORD}'; \
+                GRANT ALL ON \`${MARIADB_DATABASE}\`.* TO '${MARIADB_USERNAME}'@'${MARIADB_HOSTMASK}'; \
+                FLUSH PRIVILEGES; \
+                "
+        fi
+
+        mysqladmin -u root -p"${MARIADB_ROOTPASSWORD}" shutdown
+    else
+        echo "==> Configuring mariadb from script"
+
+        /bin/sh "${MARIADB_CONFIGSCRIPT}" "${MARIADB_ROOTPASSWORD}"
+        if [ $? -ne 0 ]; then
+            echo "Failed to configure from script, aborting" >&2
+            exit 4
+        fi
+    fi
+
+    export MARIADB_CONFIG=1
+    printf "%s" "${MARIADB_CONFIG}" > /var/run/s6/container_environment/MARIADB_CONFIG
+fi

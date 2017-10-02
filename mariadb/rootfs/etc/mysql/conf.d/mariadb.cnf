@@ -1,0 +1,17 @@
+# MariaDB-specific config file.
+# Read by /etc/mysql/my.cnf
+
+[client]
+default-character-set = utf8
+
+[mysqld]
+character-set-server  = utf8
+collation-server      = utf8_general_ci
+character_set_server  = utf8
+collation_server      = utf8_general_ci
+
+skip-external-locking
+skip-host-cache
+skip-name-resolve
+
+bind-address = 0.0.0.0
