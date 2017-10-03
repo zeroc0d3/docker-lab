@@ -41,6 +41,7 @@ AC_CONFIG_FILES([
     base-consul/Makefile
     consul/Makefile
     mariadb/Makefile
+    mongodb/Makefile
     nginx/Makefile
     nodejs/Makefile
     postgresql/Makefile

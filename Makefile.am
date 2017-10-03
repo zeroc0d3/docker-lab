@@ -3,6 +3,7 @@ SUBDIRS = \
     base-consul \
     consul \
     mariadb \
+    mongodb \
     nginx \
     nodejs \
     postgresql \
