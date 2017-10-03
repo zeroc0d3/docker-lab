@@ -28,7 +28,7 @@ services:
       - CONSUL_SERVICEPORT=5432                               # consul service port
       - CONSUL_CHECKTYPE=tcp                                  # consul health check type
       - POSTGRESQL_DATABASE=mydb                              # create database (optional)
-      - POSTGRESQL_USERNAME=mariadb                           # grant user name (optional)
-      - POSTGRESQL_PASSWORD=mariadb                           # grant user password (optional)
+      - POSTGRESQL_USERNAME=user                              # grant user name (optional)
+      - POSTGRESQL_PASSWORD=password                          # grant user password (optional)
       - POSTGRESQL_ADDRESS=172.16.0.0/12                      # grant user address (optional)
       #- POSTGRESQL_CONFIGSCRIPT=/root/postgresql/config.sh   # custom configuration script
