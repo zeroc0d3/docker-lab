@@ -38,5 +38,18 @@ Dynamic environments for:
   ```
   docker-compose up consul nginx ruby postgresql mariadb redis
   ```
+
+## Environments
+You can run docker-compose for different environment with selected containers
+
+* Running on development environment
+  ```
+  ./env_development.sh
+  ```
+* Running on production environment
+  ```
+  ./env_production.sh
+  ```
+
 ## License
 [**MIT License**](https://github.com/zeroc0d3/docker-lab/blob/master/LICENSE)
