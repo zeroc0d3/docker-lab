@@ -83,6 +83,32 @@ services:
       - backend
 
 #-------------------------------------------
+# MONGODB
+#-------------------------------------------
+  mongodb:
+    depends_on:
+      - consul
+    build:
+      context: ./mongodb
+    ports:
+      - "${MONGODB_PORT}:27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA_SAVE}/mongodb:/data/db                       # volume for data
+    environment:
+      - CONSUL_MONGODB_AGENT=${CONSUL_MONGODB_AGENT}       # consul agent hostname/IP
+      #- CONSUL_MONGODB_PORT=8500                          # consul agent port
+      #- CONSUL_MONGODB_KEYPREFIX=path/prefix/             # consul key prefix path
+      - CONSUL_MONGODB_SERVICENAME=mongodb                 # consul service name
+      - CONSUL_MONGODB_SERVICETAGS=dev                     # consul service tag
+      - CONSUL_MONGODB_SERVICEPORT=27017                   # consul service port
+      - CONSUL_MONGODB_CHECKTYPE=tcp                       # consul health check type
+      #- MONGODB_PROFILE=my-small                          # default configuration profile to use (my-small, my-medium ...)
+      #- MONGODB_CONFIGSCRIPT=${MONGODB_CONFIGSCRIPT}      # custom configuration script
+    networks:
+      - backend
+
+#-------------------------------------------
 # NGINX
 #-------------------------------------------
   nginx:
@@ -207,6 +233,8 @@ volumes:
   consul:
     driver: "local"
   mariadb:
+    driver: "local"
+  mongodb:
     driver: "local"
   nginx:
     driver: "local"
