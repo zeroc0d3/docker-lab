@@ -10,6 +10,7 @@ Dynamic environments for:
 * NodeJS
 * PostgreSQL
 * Ruby
+* Application (Workspace for NodeJS & Ruby)
 
 ## Build All (Shortcut)
 ```
@@ -29,7 +30,7 @@ Dynamic environments for:
   ```
 * Force recreate some containers only
   ```
-  docker-compose build && docker-compose up --force-recreate consul nginx ruby postgresql mariadb mongodb redis
+  docker-compose build && docker-compose up --force-recreate consul nginx ruby postgresql mariadb mongodb redis application
   ```
 * Running container only
   ```
@@ -37,7 +38,7 @@ Dynamic environments for:
   ```
 * Running some containers only
   ```
-  docker-compose up consul nginx ruby postgresql mariadb mongodb redis
+  docker-compose up consul nginx ruby postgresql mariadb mongodb redis application
   ```
 
 ## Environments
