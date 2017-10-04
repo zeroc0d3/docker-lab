@@ -46,6 +46,8 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
+      - CONSUL_VERSION=${CONSUL_VERSION}
+      - CONSULTEMPLATE_VERSION=${CONSULTEMPLATE_VERSION}
       - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
     networks:
       - backend

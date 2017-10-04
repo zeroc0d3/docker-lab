@@ -1,8 +1,9 @@
 FROM dockerlab/base-consul:latest
 MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
-RUN apk add --update redis && \
-    rm -rf /var/cache/apk/*
+RUN apk update \
+    && apk add --update redis \
+    && rm -rf /var/cache/apk/* \
 
 COPY rootfs/ /
 
