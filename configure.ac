@@ -47,6 +47,7 @@ AC_CONFIG_FILES([
     postgresql/Makefile
     redis/Makefile
     ruby/Makefile
+    application/Makefile
 ])
 
 AC_OUTPUT

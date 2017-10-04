@@ -8,4 +8,5 @@ SUBDIRS = \
     nodejs \
     postgresql \
     redis \
-    ruby
+    ruby \
+    application 

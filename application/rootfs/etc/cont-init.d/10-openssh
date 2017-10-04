@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv sh
+
+if [ -z "${OPENSSH_CONFIG}" ]; then
+    echo "==> Configuring openssh from environment"
+
+    ssh-keygen -A
+
+    export OPENSSH_CONFIG=1
+    printf "%s" "${OPENSSH_CONFIG}" > /var/run/s6/container_environment/OPENSSH_CONFIG
+fi

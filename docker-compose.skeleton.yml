@@ -139,6 +139,9 @@ services:
   nodejs:
     build:
       context: ./nodejs
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA_APPLICATION}:/home/docker/workspace
     networks:
       - frontend
       - backend
@@ -206,11 +209,37 @@ services:
       context: ./ruby
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ${DATA_APPLICATION}:/home/docker/workspace
     environment:
       - CONSUL_RUBY_AGENT=consul                           # consul agent hostname/IP
       #- CONSUL_RUBY_PORT=8500                             # consul agent port
       #- CONSUL_RUBY_KEYPREFIX=path/prefix/                # consul key prefix path
     networks:
+      - backend
+
+#-------------------------------------------
+# APPLICATION
+#-------------------------------------------
+  application:
+    depends_on:
+      - consul
+    build:
+      context: ./application
+    ports:
+      - "${APPLICATION_PORT}:22"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA_APPLICATION}:/home/docker/workspace
+    environment:
+      - CONSUL_APPLICATION_AGENT=consul                    # consul agent hostname/IP
+      #- CONSUL_APPLICATION_PORT=8500                      # consul agent port
+      #- CONSUL_APPLICATION_KEYPREFIX=path/prefix/         # consul key prefix path
+      - CONSUL_APPLICATION_SERVICENAME=application         # consul service name
+      - CONSUL_APPLICATION_SERVICETAGS=dev                 # consul service tag
+      - CONSUL_APPLICATION_SERVICEPORT=22                  # consul service port
+      - CONSUL_APPLICATION_CHECKTYPE=tcp                   # consul health check type
+    networks:
+      - frontend
       - backend
 
 #-------------------------------------------------------------------
@@ -231,6 +260,8 @@ volumes:
   base-consul:
     driver: "local"
   consul:
+    driver: "local"
+  application:
     driver: "local"
   mariadb:
     driver: "local"

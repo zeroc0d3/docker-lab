@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+trap 'exit 1' ERR INT TERM
+
+if [ ! -z $1 ]; then
+    rootdir="$1"
+else
+    rootdir="$HOME"
+fi
+
+find ${rootdir} -type d -name '*.git' -exec /bin/bash -c "cd '{}' && pwd && git fetch --all --prune" \;

@@ -393,7 +393,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile base/Makefile base-consul/Makefile consul/Makefile mariadb/Makefile mongodb/Makefile nginx/Makefile nodejs/Makefile postgresql/Makefile redis/Makefile ruby/Makefile"
+config_files=" Makefile base/Makefile base-consul/Makefile consul/Makefile mariadb/Makefile mongodb/Makefile nginx/Makefile nodejs/Makefile postgresql/Makefile redis/Makefile ruby/Makefile application/Makefile"
 
 ac_cs_usage="\
 \`$as_me' instantiates files and other configuration actions
