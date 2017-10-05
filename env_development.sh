@@ -1,6 +1,11 @@
 #!/bin/sh
 
-## Remove Old Container ##
+## Build Core Container ##
+docker-compose build --no-cache base
+docker-compose build --no-cache base-consul
+docker-compose build --no-cache consul
+
+## Rebuild All Container (Remove Old Containers) ##
 # docker-compose build --no-cache
 
 ## Skip Remove Old Container ##
