@@ -141,9 +141,22 @@ services:
   nodejs:
     build:
       context: ./nodejs
+    ports:
+      - "${NODEJS_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_APPLICATION}:/home/docker/workspace
+      #- ${DATA_APPLICATION}:/home/docker/workspace
+    environment:
+      - CONSUL_NODEJS_AGENT=${CONSUL_NODEJS_AGENT}         # consul agent hostname/IP
+      #- CONSUL_NODEJS_PORT=8500                           # consul agent port
+      #- CONSUL_NODEJS_KEYPREFIX=path/prefix/              # consul key prefix path
+      - CONSUL_NODEJS_SERVICENAME=nodejs                   # consul service name
+      - CONSUL_NODEJS_SERVICETAGS=dev                      # consul service tag
+      - CONSUL_NODEJS_SERVICEPORT=22                       # consul service port
+      - CONSUL_NODEJS_CHECKTYPE=tcp                        # consul health check type
+      - NODE_VERSION=${NODE_VERSION}
+      - NPM_VERSION=${NPM_VERSION}
+      - YARN_VERSION=${YARN_VERSION}
     networks:
       - frontend
       - backend
@@ -209,13 +222,21 @@ services:
       - consul
     build:
       context: ./ruby
+    ports:
+      - "${RUBY_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_APPLICATION}:/home/docker/workspace
+      #- ${DATA_APPLICATION}:/home/docker/workspace
     environment:
-      - CONSUL_RUBY_AGENT=consul                           # consul agent hostname/IP
+      - CONSUL_RUBY_AGENT=${CONSUL_RUBY_AGENT}             # consul agent hostname/IP
       #- CONSUL_RUBY_PORT=8500                             # consul agent port
       #- CONSUL_RUBY_KEYPREFIX=path/prefix/                # consul key prefix path
+      - CONSUL_RUBY_SERVICENAME=ruby                       # consul service name
+      - CONSUL_RUBY_SERVICETAGS=dev                        # consul service tag
+      - CONSUL_RUBY_SERVICEPORT=22                         # consul service port
+      - CONSUL_RUBY_CHECKTYPE=tcp                          # consul health check type
+      - RUBY_MAJOR=${RUBY_MAJOR}
+      - RUBY_VERSION=${RUBY_VERSION}
     networks:
       - backend
 
