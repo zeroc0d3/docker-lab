@@ -50,7 +50,11 @@ Dynamic environments for:
 
 ## Environments
 You can run docker-compose for different environment with selected containers
-
+* Copy `env.sh.example` to `env.sh`
+* Change to execute script
+  ```
+  chmod a+x env.sh
+  ```
 * Change environment in `env.sh` file
   ```
   ENV="development"            # (use: "development" or "production" as selected environment)
