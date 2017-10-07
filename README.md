@@ -12,10 +12,17 @@ Dynamic environments for:
 * Ruby
 * Application (Workspace for NodeJS & Ruby)
 
-## Build All (Shortcut)
-```
-./build_all.sh
-```
+## Build & Run Containers (Without `docker-compose`)
+* Build Containers
+  ```
+  ./build_all.sh
+  ```
+* Running Containers (Single Containers Only)
+  ```
+  ./run_nginx.sh
+  ./run_mariadb.sh
+  ./run_postgresql.sh
+  ```
 
 ## Docker Compose
 * Copy `.env.example` to `.env`
@@ -44,13 +51,15 @@ Dynamic environments for:
 ## Environments
 You can run docker-compose for different environment with selected containers
 
-* Running on development environment
+* Change environment in `env.sh` file
   ```
-  ./env_development.sh
+  ENV="development"            # (use: "development" or "production" as selected environment)
+  CONTAINER_PRODUCTION="..."   # (selected containers will be run in production environment)
+  CONTAINER_DEVELOPMENT="..."  # (selected containers will be run in development environment)
   ```
-* Running on production environment
+* Running script
   ```
-  ./env_production.sh
+  ./env.sh
   ```
 
 ## License
