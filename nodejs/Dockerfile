@@ -1,4 +1,4 @@
-FROM zeroc0d3lab/centos-base-consul-lite:latest
+FROM zeroc0d3lab/centos-base-workspace-lite:latest
 MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
 #-----------------------------------------------------------------------------
@@ -12,48 +12,6 @@ USER root
 #-----------------------------------------------------------------------------
 RUN yum makecache fast \
     && yum -y update
-
-#-----------------------------------------------------------------------------
-# Install Workspace Dependency
-#-----------------------------------------------------------------------------
-RUN yum -y install \
-           --setopt=tsflags=nodocs \
-           --disableplugin=fastestmirror \
-         git \
-         nano \
-         zip \
-         unzip \
-         zsh \
-         gcc \
-         automake \
-         make \
-         libevent-devel \
-         ncurses-devel \
-         glibc-static \
-
-#-----------------------------------------------------------------------------
-# Install NodeJS Dependency
-#-----------------------------------------------------------------------------
-RUN yum -y install \
-           --setopt=tsflags=nodocs \
-           --disableplugin=fastestmirror \
-         git-core \
-         zlib \
-         zlib-devel \
-         gcc-c++ \
-         patch \
-         readline \
-         readline-devel \
-         libyaml-devel \
-         libffi-devel \
-         openssl-devel \
-         make \
-         bzip2 \
-         bison \
-         autoconf \
-         automake \
-         libtool \
-         sqlite-devel
 
 #-----------------------------------------------------------------------------
 # Install NodeJS

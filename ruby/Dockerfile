@@ -1,4 +1,4 @@
-FROM zeroc0d3lab/centos-base-consul-lite:latest
+FROM zeroc0d3lab/centos-base-workspace-lite:latest
 MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
 #-----------------------------------------------------------------------------
@@ -20,17 +20,6 @@ RUN yum makecache fast \
 RUN yum -y install \
            --setopt=tsflags=nodocs \
            --disableplugin=fastestmirror \
-         git \
-         nano \
-         zip \
-         unzip \
-         zsh \
-         gcc \
-         automake \
-         make \
-         libevent-devel \
-         ncurses-devel \
-         glibc-static \
 
 #-----------------------------------------------------------------------------
 # Install MySQL (MariaDB) Library
@@ -49,33 +38,9 @@ RUN yum -y install \
     && yum install -y postgresql96-libs postgresql96-server postgresql96-devel
 
 #-----------------------------------------------------------------------------
-# Install Ruby Dependency
-#-----------------------------------------------------------------------------
-RUN yum -y install \
-           --setopt=tsflags=nodocs \
-           --disableplugin=fastestmirror \
-         git-core \
-         zlib \
-         zlib-devel \
-         gcc-c++ \
-         patch \
-         readline \
-         readline-devel \
-         libyaml-devel \
-         libffi-devel \
-         openssl-devel \
-         make \
-         bzip2 \
-         bison \
-         autoconf \
-         automake \
-         libtool \
-         sqlite-devel \
-
-#-----------------------------------------------------------------------------
 # Clean Up All Cache
 #-----------------------------------------------------------------------------
-    && yum clean all
+RUN yum clean all
 
 #-----------------------------------------------------------------------------
 # Setup Locale UTF-8
