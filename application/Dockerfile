@@ -136,38 +136,17 @@ RUN git clone https://github.com/rbenv/rbenv.git /home/docker/.rbenv \
 #     && ./usr/bin/ruby -v
 
 #-----------------------------------------------------------------------------
-# Install Ruby Packages (rbenv)
+# Copy package dependencies in Gemfile
 #-----------------------------------------------------------------------------
-RUN ./home/docker/.rbenv/shims/gem install bundler \
-    && ./home/docker/.rbenv/shims/gem install rails \
-    && ./home/docker/.rbenv/shims/gem install rspec \
-    && ./home/docker/.rbenv/shims/gem install serverspec \
-    && ./home/docker/.rbenv/shims/gem install docker-api \
-    && ./home/docker/.rbenv/shims/gem install sqlite3 \
-    && ./home/docker/.rbenv/shims/gem install mongoid \
-    && ./home/docker/.rbenv/shims/gem install sequel \
-    && ./home/docker/.rbenv/shims/gem install pg \
-    && ./home/docker/.rbenv/shims/gem install mysql2 \
-    && ./home/docker/.rbenv/shims/gem install sequel_pg \
-    && ./home/docker/.rbenv/shims/gem install apktools \
-    && ./home/docker/.rbenv/shims/gem install rubocop
+COPY ./rootfs/home/docker/Gemfile /home/docker/Gemfile
+COPY ./rootfs/home/docker/Gemfile.lock /home/docker/Gemfile.lock
 
 #-----------------------------------------------------------------------------
-# Install Ruby Packages (rvm) - alternatives
+# Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-# RUN ./home/docker/.rvm/scripts/gem install bundler \
-#     && ./home/docker/.rvm/scripts/gem install rails \
-#     && ./home/docker/.rvm/scripts/gem install rspec \
-#     && ./home/docker/.rvm/scripts/gem install serverspec \
-#     && ./home/docker/.rvm/scripts/gem install docker-api \
-#     && ./home/docker/.rvm/scripts/gem install sqlite3 \
-#     && ./home/docker/.rvm/scripts/gem install mongoid \
-#     && ./home/docker/.rvm/scripts/gem install sequel \
-#     && ./home/docker/.rvm/scripts/gem install pg \
-#     && ./home/docker/.rvm/scripts/gem install mysql2 \
-#     && ./home/docker/.rvm/scripts/gem install sequel_pg \
-#     && ./home/docker/.rvm/scripts/gem install apktools \
-#     && ./home/docker/.rbenv/shims/gem install rubocop
+COPY ./rootfs/home/docker/gems.sh /home/docker/gems.sh
+RUN chmod a+x /home/docker/gems.sh \
+    && ./home/docker/gems.sh
 
 USER root
 #-----------------------------------------------------------------------------
@@ -179,7 +158,7 @@ RUN mkdir -p ${GIT_HOME}/workspace \
 #-----------------------------------------------------------------------------
 # Fixing ownership for 'docker' user
 #-----------------------------------------------------------------------------
-RUN chown -R docker:docker ${GIT_HOME} 
+RUN chown -R docker:docker ${GIT_HOME}
 
 #-----------------------------------------------------------------------------
 # Set PORT Docker Container
