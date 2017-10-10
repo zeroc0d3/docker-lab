@@ -1,4 +1,4 @@
-FROM zeroc0d3lab/centos-base-consul-lite:latest
+FROM zeroc0d3lab/centos-base-consul:latest
 MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
 #-----------------------------------------------------------------------------
