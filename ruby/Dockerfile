@@ -110,39 +110,17 @@ RUN git clone https://github.com/rbenv/rbenv.git /root/.rbenv \
 #     && ./usr/bin/ruby -v
 
 #-----------------------------------------------------------------------------
-# Install Ruby Packages (rbenv)
+# Copy package dependencies in Gemfile
 #-----------------------------------------------------------------------------
-RUN ./root/.rbenv/shims/gem install bundler \
-    && ./root/.rbenv/shims/gem install rails \
-    && ./root/.rbenv/shims/gem install rspec \
-    && ./root/.rbenv/shims/gem install serverspec \
-    && ./root/.rbenv/shims/gem install docker-api \
-    && ./root/.rbenv/shims/gem install sqlite3 \
-    && ./root/.rbenv/shims/gem install mongoid \
-    && ./root/.rbenv/shims/gem install sequel \
-    && ./root/.rbenv/shims/gem install pg \
-    && ./root/.rbenv/shims/gem install mysql2 \
-    && ./root/.rbenv/shims/gem install sequel_pg \
-    && ./root/.rbenv/shims/gem install apktools \
-    && ./root/.rbenv/shims/gem install rubocop
+COPY ./rootfs/root/Gemfile /root/Gemfile
+COPY ./rootfs/root/Gemfile.lock /root/Gemfile.lock
 
 #-----------------------------------------------------------------------------
-# Install Ruby Packages (rvm) - alternatives
+# Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-# RUN ./root/.rvm/scripts/gem install bundler \
-#     && ./root/.rvm/scripts/gem install rails \
-#     && ./root/.rvm/scripts/gem install rspec \
-#     && ./root/.rvm/scripts/gem install serverspec \
-#     && ./root/.rvm/scripts/gem install docker-api \
-#     && ./root/.rvm/scripts/gem install sqlite3 \
-#     && ./root/.rvm/scripts/gem install mongoid \
-#     && ./root/.rvm/scripts/gem install sequel \
-#     && ./root/.rvm/scripts/gem install pg \
-#     && ./root/.rvm/scripts/gem install mysql2 \
-#     && ./root/.rvm/scripts/gem install sequel_pg \
-#     && ./root/.rvm/scripts/gem install apktools \
-#     && ./root/.rbenv/shims/gem install rubocop
-
+COPY ./rootfs/root/gems.sh /root/gems.sh
+RUN chmod a+x /root/gems.sh \
+    && ./root/gems.sh
 
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
@@ -163,7 +141,7 @@ VOLUME ["/home", "/root"]
 # Setup TrueColors (Terminal)
 #-----------------------------------------------------------------------------
 COPY ./rootfs/root/colors/24-bit-color.sh /root/colors/24-bit-color.sh
-RUN chmod +x /root/colors/24-bit-color.sh \ 
+RUN chmod a+x /root/colors/24-bit-color.sh \
     ./root/colors/24-bit-color.sh
 
 #-----------------------------------------------------------------------------
