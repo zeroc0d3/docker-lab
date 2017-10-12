@@ -145,7 +145,7 @@ services:
       - "${NODEJS_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_APPLICATION}:/home/docker/workspace
+      - ${PATH_APPLICATION}:/home/docker/workspace
     environment:
       - CONSUL_NODEJS_AGENT=${CONSUL_NODEJS_AGENT}         # consul agent hostname/IP
       #- CONSUL_NODEJS_PORT=8500                           # consul agent port
@@ -226,7 +226,7 @@ services:
       - "${RUBY_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_APPLICATION}:/home/docker/workspace
+      - ${PATH_APPLICATION}:/home/docker/workspace
     environment:
       - CONSUL_RUBY_AGENT=${CONSUL_RUBY_AGENT}             # consul agent hostname/IP
       #- CONSUL_RUBY_PORT=8500                             # consul agent port
@@ -252,7 +252,7 @@ services:
       - "${APPLICATION_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DATA_APPLICATION}:/home/docker/workspace
+      - ${PATH_APPLICATION}:/home/docker/workspace
     environment:
       - CONSUL_APPLICATION_AGENT=consul                    # consul agent hostname/IP
       #- CONSUL_APPLICATION_PORT=8500                      # consul agent port

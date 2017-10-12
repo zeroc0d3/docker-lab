@@ -17,16 +17,15 @@ ENV RUBY_MAJOR=2.4 \
 COPY ./rootfs/home/docker/.zshrc /home/docker/.zshrc
 COPY ./rootfs/home/docker/.bashrc /home/docker/.bashrc
 
-USER docker
 #-----------------------------------------------------------------------------
 # Install Ruby with rbenv (default)
 #-----------------------------------------------------------------------------
-RUN git clone https://github.com/rbenv/rbenv.git /home/docker/.rbenv \
-    && git clone https://github.com/rbenv/ruby-build.git /home/docker/.rbenv/plugins/ruby-build \
-    && ./home/docker/.rbenv/bin/rbenv install ${RUBY_VERSION} \
-    && ./home/docker/.rbenv/bin/rbenv global ${RUBY_VERSION} \
-    && ./home/docker/.rbenv/bin/rbenv rehash \
-    && ./home/docker/.rbenv/shims/ruby -v
+# RUN git clone https://github.com/rbenv/rbenv.git /home/docker/.rbenv \
+#     && git clone https://github.com/rbenv/ruby-build.git /home/docker/.rbenv/plugins/ruby-build \
+#     && ./home/docker/.rbenv/bin/rbenv install ${RUBY_VERSION} \
+#     && ./home/docker/.rbenv/bin/rbenv global ${RUBY_VERSION} \
+#     && ./home/docker/.rbenv/bin/rbenv rehash \
+#     && ./home/docker/.rbenv/shims/ruby -v
 
 #-----------------------------------------------------------------------------
 # Install Ruby with rvm (alternatives)
@@ -47,8 +46,8 @@ COPY ./rootfs/home/docker/Gemfile.lock /tmp/Gemfile.lock
 # Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
 COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
-RUN chmod a+x /tmp/gems.sh; sync \
-    && ./tmp/gems.sh
+ONBUILD RUN chmod a+x /tmp/gems.sh; sync \
+            && ./tmp/gems.sh
 
 USER root
 #-----------------------------------------------------------------------------
@@ -60,7 +59,7 @@ RUN mkdir -p ${PATH_WORKSPACE} \
 #-----------------------------------------------------------------------------
 # Fixing ownership for 'docker' user
 #-----------------------------------------------------------------------------
-RUN chown -R docker:docker ${PATH_HOME}
+# RUN chown -R docker:docker ${PATH_HOME}
 
 #-----------------------------------------------------------------------------
 # Set PORT Docker Container
@@ -70,7 +69,7 @@ EXPOSE 22
 #-----------------------------------------------------------------------------
 # Set Volume Application
 #-----------------------------------------------------------------------------
-VOLUME [${PATH_HOME}, "/root"]
+VOLUME [${PATH_WORKSPACE}, "/root"]
 
 #-----------------------------------------------------------------------------
 # Finalize (reconfigure)

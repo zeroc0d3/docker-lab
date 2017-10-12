@@ -25,7 +25,7 @@ Dynamic environments for:
   ```
 
 ## Docker Compose
-* Copy `.env.example` to `.env`
+* Copy `env-example` to `.env`
 * Copy `docker-compose.skeleton.yml` to `docker-compose.yml`
 * Build & running
   ```
