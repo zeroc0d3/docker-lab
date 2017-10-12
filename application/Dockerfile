@@ -40,15 +40,15 @@ RUN git clone https://github.com/rbenv/rbenv.git /home/docker/.rbenv \
 #-----------------------------------------------------------------------------
 # Copy package dependencies in Gemfile
 #-----------------------------------------------------------------------------
-COPY ./rootfs/home/docker/Gemfile /home/docker/Gemfile
-COPY ./rootfs/home/docker/Gemfile.lock /home/docker/Gemfile.lock
+COPY ./rootfs/home/docker/Gemfile /tmp/Gemfile
+COPY ./rootfs/home/docker/Gemfile.lock /tmp/Gemfile.lock
 
 #-----------------------------------------------------------------------------
 # Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-RUN chmod a+x ./rootfs/home/docker/gems.sh
-COPY ./rootfs/home/docker/gems.sh $HOME/gems.sh
-RUN ./rootfs/home/docker/gems.sh
+COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
+RUN chmod a+x /tmp/gems.sh; sync \
+    && ./tmp/gems.sh
 
 USER root
 #-----------------------------------------------------------------------------

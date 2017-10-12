@@ -4,15 +4,10 @@ MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 #-----------------------------------------------------------------------------
 # Set Environment
 #-----------------------------------------------------------------------------
-ENV GIT_HOME=/home/docker
+ENV PATH_HOME=/home/docker \
+    PATH_WORKSPACE=/home/docker/workspace
 
 USER root
-#-----------------------------------------------------------------------------
-# Find Fastest Repo & Update Repo
-#-----------------------------------------------------------------------------
-RUN yum makecache fast \
-    && yum -y update
-
 #-----------------------------------------------------------------------------
 # Install NodeJS
 #-----------------------------------------------------------------------------
@@ -24,10 +19,46 @@ RUN yum -y install https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.
 #-----------------------------------------------------------------------------
     && yum clean all
 
+USER docker
+#-----------------------------------------------------------------------------
+# Install Javascipt Unit Test
+#-----------------------------------------------------------------------------
+RUN ./usr/bin/npm install chai \
+    && ./usr/bin/npm install tv4 \
+    && ./usr/bin/npm install newman \
+
+#-----------------------------------------------------------------------------
+# Install Javascipt Packages Manager
+#-----------------------------------------------------------------------------
+    && ./usr/bin/npm install --global yarn \
+    && ./usr/bin/npm install --global bower \
+    && ./usr/bin/npm install --global grunt \
+    && ./usr/bin/npm install --global gulp \
+    && ./usr/bin/npm install --global yo
+
+#-----------------------------------------------------------------------------
+# Upgrade Javascipt Packages Manager
+#-----------------------------------------------------------------------------
+RUN ./usr/bin/npm upgrade --global chai \
+    && ./usr/bin/npm upgrade --global tv4 \
+    && ./usr/bin/npm upgrade --global newman \
+    && ./usr/bin/npm upgrade --global yarn \
+    && ./usr/bin/npm upgrade --global bower \
+    && ./usr/bin/npm upgrade --global grunt \
+    && ./usr/bin/npm upgrade --global gulp \
+    && ./usr/bin/npm upgrade --global yo
+
+USER root
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
 #-----------------------------------------------------------------------------
-RUN mkdir -p ${GIT_HOME}/workspace
+RUN mkdir -p ${PATH_WORKSPACE} \
+    mkdir -p /var/run/s6
+
+#-----------------------------------------------------------------------------
+# Fixing ownership for 'docker' user
+#-----------------------------------------------------------------------------
+RUN chown -R docker:docker ${PATH_HOME}
 
 #-----------------------------------------------------------------------------
 # Set PORT Docker Container
@@ -37,7 +68,7 @@ EXPOSE 22
 #-----------------------------------------------------------------------------
 # Set Volume Application
 #-----------------------------------------------------------------------------
-VOLUME [${GIT_HOME}, "/root"]
+VOLUME [${PATH_HOME}, "/root"]
 
 #-----------------------------------------------------------------------------
 # Finalize (reconfigure)
