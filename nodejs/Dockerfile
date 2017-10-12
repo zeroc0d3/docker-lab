@@ -25,11 +25,6 @@ RUN yum -y install https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.
     && yum clean all
 
 #-----------------------------------------------------------------------------
-# Setup Locale UTF-8
-#-----------------------------------------------------------------------------
-RUN ["/usr/bin/localedef", "-i", "en_US", "-f", "UTF-8", "en_US.UTF-8"]
-
-#-----------------------------------------------------------------------------
 # Create Workspace Application Folder
 #-----------------------------------------------------------------------------
 RUN mkdir -p ${GIT_HOME}/workspace
@@ -42,14 +37,7 @@ EXPOSE 22
 #-----------------------------------------------------------------------------
 # Set Volume Application
 #-----------------------------------------------------------------------------
-VOLUME ["/home", "/root"]
-
-#-----------------------------------------------------------------------------
-# Setup TrueColors (Terminal)
-#-----------------------------------------------------------------------------
-COPY ./rootfs/root/colors/24-bit-color.sh /root/colors/24-bit-color.sh
-RUN chmod a+x /root/colors/24-bit-color.sh \
-    ./root/colors/24-bit-color.sh
+VOLUME [${GIT_HOME}, "/root"]
 
 #-----------------------------------------------------------------------------
 # Finalize (reconfigure)

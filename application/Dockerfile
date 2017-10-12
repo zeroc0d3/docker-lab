@@ -1,29 +1,13 @@
-FROM zeroc0d3lab/centos-base-consul:latest
+FROM zeroc0d3lab/centos-base-application:latest
 MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
 #-----------------------------------------------------------------------------
 # Set Environment
 #-----------------------------------------------------------------------------
-ENV RUBY_MAJOR=2.4
-ENV RUBY_VERSION=2.4.2
-ENV GIT_HOME=/home/docker
-
-USER root
-#-----------------------------------------------------------------------------
-# Set Group & User for 'docker'
-#-----------------------------------------------------------------------------
-RUN mkdir -p ${GIT_HOME} \
-    && groupadd docker \
-    && useradd -r -g docker docker \
-    && usermod -aG docker docker \
-    && chown -R docker:docker ${GIT_HOME} \
-    && mkdir -p ${GIT_HOME}/git-shell-commands \
-    && chmod 755 ${GIT_HOME}/git-shell-commands
-
-#-----------------------------------------------------------------------------
-# Setup Locale UTF-8
-#-----------------------------------------------------------------------------
-RUN ["/usr/bin/localedef", "-i", "en_US", "-f", "UTF-8", "en_US.UTF-8"]
+ENV RUBY_MAJOR=2.4 \
+    RUBY_VERSION=2.4.2 \
+    PATH_HOME=/home/docker \
+    PATH_WORKSPACE=/home/docker/workspace
 
 #-----------------------------------------------------------------------------
 # Prepare Install Ruby
@@ -32,13 +16,6 @@ RUN ["/usr/bin/localedef", "-i", "en_US", "-f", "UTF-8", "en_US.UTF-8"]
 #-----------------------------------------------------------------------------
 COPY ./rootfs/home/docker/.zshrc /home/docker/.zshrc
 COPY ./rootfs/home/docker/.bashrc /home/docker/.bashrc
-
-#-----------------------------------------------------------------------------
-# Setup TrueColors (Terminal)
-#-----------------------------------------------------------------------------
-COPY ./rootfs/home/docker/colors/24-bit-color.sh /home/docker/colors/24-bit-color.sh
-RUN chmod +x /home/docker/colors/24-bit-color.sh \
-    ./home/docker/colors/24-bit-color.sh
 
 USER docker
 #-----------------------------------------------------------------------------
@@ -69,21 +46,21 @@ COPY ./rootfs/home/docker/Gemfile.lock /home/docker/Gemfile.lock
 #-----------------------------------------------------------------------------
 # Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-COPY ./rootfs/home/docker/gems.sh /home/docker/gems.sh
-RUN chmod a+x /home/docker/gems.sh \
-    && ./home/docker/gems.sh
+COPY ./rootfs/home/docker/gems.sh $HOME/gems.sh
+RUN chmod a+x $HOME/gems.sh \
+    && /bin/sh $HOME/gems.sh
 
 USER root
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
 #-----------------------------------------------------------------------------
-RUN mkdir -p ${GIT_HOME}/workspace \
+RUN mkdir -p ${PATH_WORKSPACE} \
     mkdir -p /var/run/s6
 
 #-----------------------------------------------------------------------------
 # Fixing ownership for 'docker' user
 #-----------------------------------------------------------------------------
-RUN chown -R docker:docker ${GIT_HOME}
+RUN chown -R docker:docker ${PATH_HOME}
 
 #-----------------------------------------------------------------------------
 # Set PORT Docker Container
@@ -93,7 +70,7 @@ EXPOSE 22
 #-----------------------------------------------------------------------------
 # Set Volume Application
 #-----------------------------------------------------------------------------
-VOLUME ["/home", "/root"]
+VOLUME [${PATH_HOME}, "/root"]
 
 #-----------------------------------------------------------------------------
 # Finalize (reconfigure)
