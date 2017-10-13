@@ -257,7 +257,6 @@ services:
       - CONSUL_APPLICATION_SERVICETAGS=dev                 # consul service tag
       - CONSUL_APPLICATION_SERVICEPORT=22                  # consul service port
       - CONSUL_APPLICATION_CHECKTYPE=tcp                   # consul health check type
-      - RUBY_MAJOR=${RUBY_MAJOR}
       - RUBY_VERSION=${RUBY_VERSION}
     networks:
       - frontend
