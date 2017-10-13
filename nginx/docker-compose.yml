@@ -1,10 +1,10 @@
-version: '3'
-
-volumes:
-  #nginx:
-  #www:
+version: '3.2'
 
 services:
+
+#-------------------------------------------------------------------
+# CONSUL
+#-------------------------------------------------------------------
   consul:
     image: zeroc0d3lab/centos-consul
     ports:
@@ -14,6 +14,9 @@ services:
     environment:
       - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
 
+#-------------------------------------------------------------------
+# NGINX
+#-------------------------------------------------------------------
   nginx:
     depends_on:
       - consul

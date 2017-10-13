@@ -1,6 +1,10 @@
-version: '3'
+version: '3.2'
 
 services:
+
+#-------------------------------------------------------------------
+# CONSUL
+#-------------------------------------------------------------------
   consul:
     image: zeroc0d3lab/centos-consul
     ports:
@@ -10,6 +14,9 @@ services:
     environment:
       - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
 
+#-------------------------------------------------------------------
+# POSTGRESQL
+#-------------------------------------------------------------------
   postgresql:
     depends_on:
       - consul

@@ -1,8 +1,12 @@
 version: '3.2'
 
 services:
+
+#-------------------------------------------------------------------
+# CONSUL
+#-------------------------------------------------------------------
   consul:
-    image: dockerlab/consul
+    image: zeroc0d3lab/centos-consul
     ports:
       - "8500:8500"
     volumes:
@@ -10,15 +14,25 @@ services:
     environment:
       - CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options
 
+#-------------------------------------------
+# RUBY
+#-------------------------------------------
   ruby:
     depends_on:
       - consul
-    image: dockerlab/ruby
-    network_mode: host
+    build:
+      context: ./ruby
+    ports:
+      - "${RUBY_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ${PATH_APPLICATION}:/home/docker/workspace
     environment:
-      - CONSUL_AGENT=consul                  # consul agent hostname/IP
-      #- CONSUL_PORT=8500                    # consul agent port
-      #- CONSUL_KEYPREFIX=path/prefix/       # consul key prefix path
-
+      - CONSUL_RUBY_AGENT=${CONSUL_RUBY_AGENT}             # consul agent hostname/IP
+      #- CONSUL_RUBY_PORT=8500                             # consul agent port
+      #- CONSUL_RUBY_KEYPREFIX=path/prefix/                # consul key prefix path
+      - CONSUL_RUBY_SERVICENAME=ruby                       # consul service name
+      - CONSUL_RUBY_SERVICETAGS=dev                        # consul service tag
+      - CONSUL_RUBY_SERVICEPORT=22                         # consul service port
+      - CONSUL_RUBY_CHECKTYPE=tcp                          # consul health check type
+      - RUBY_VERSION=${RUBY_VERSION}
