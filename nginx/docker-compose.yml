@@ -6,7 +6,7 @@ volumes:
 
 services:
   consul:
-    image: dockerlab/consul
+    image: zeroc0d3lab/centos-consul
     ports:
       - "8500:8500"
     volumes:
@@ -17,7 +17,8 @@ services:
   nginx:
     depends_on:
       - consul
-    image: dockerlab/nginx
+    build:
+      context: .
     ports:
       - "80:80"
       - "443:443"

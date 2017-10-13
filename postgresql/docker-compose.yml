@@ -2,7 +2,7 @@ version: '3'
 
 services:
   consul:
-    image: dockerlab/consul
+    image: zeroc0d3lab/centos-consul
     ports:
       - "8500:8500"
     volumes:
@@ -13,7 +13,8 @@ services:
   postgresql:
     depends_on:
       - consul
-    image: dockerlab/postgresql
+    build:
+      context: .
     ports:
       - "5432:5432"
     volumes:

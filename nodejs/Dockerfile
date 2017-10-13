@@ -7,7 +7,6 @@ MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 ENV PATH_HOME=/home/docker \
     PATH_WORKSPACE=/home/docker/workspace
 
-USER root
 #-----------------------------------------------------------------------------
 # Install NodeJS
 #-----------------------------------------------------------------------------
@@ -19,7 +18,6 @@ RUN yum -y install https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.
 #-----------------------------------------------------------------------------
     && yum clean all
 
-USER docker
 #-----------------------------------------------------------------------------
 # Install Javascipt Unit Test
 #-----------------------------------------------------------------------------
@@ -48,7 +46,6 @@ RUN ./usr/bin/npm upgrade --global chai \
     && ./usr/bin/npm upgrade --global gulp \
     && ./usr/bin/npm upgrade --global yo
 
-USER root
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
 #-----------------------------------------------------------------------------

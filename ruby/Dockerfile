@@ -4,7 +4,7 @@ MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 #-----------------------------------------------------------------------------
 # Set Environment
 #-----------------------------------------------------------------------------
-ENV RUBY_VERSION=2.4.2 \
+ENV RUBY_VERSION=2.3.0 \
     PATH_HOME=/home/docker \
     PATH_WORKSPACE=/home/docker/workspace
 
@@ -19,20 +19,20 @@ COPY ./rootfs/home/docker/.bashrc /home/docker/.bashrc
 #-----------------------------------------------------------------------------
 # Install Ruby with rbenv (default)
 #-----------------------------------------------------------------------------
-# RUN git clone https://github.com/rbenv/rbenv.git /home/docker/.rbenv \
-#     && git clone https://github.com/rbenv/ruby-build.git /home/docker/.rbenv/plugins/ruby-build \
-#     && ./home/docker/.rbenv/bin/rbenv install ${RUBY_VERSION} \
-#     && ./home/docker/.rbenv/bin/rbenv global ${RUBY_VERSION} \
-#     && ./home/docker/.rbenv/bin/rbenv rehash \
-#     && ./home/docker/.rbenv/shims/ruby -v
+RUN git clone https://github.com/rbenv/rbenv.git /home/docker/.rbenv \
+    && git clone https://github.com/rbenv/ruby-build.git /home/docker/.rbenv/plugins/ruby-build \
+    && $HOME/.rbenv/bin/rbenv install ${RUBY_VERSION} \
+    && $HOME/.rbenv/bin/rbenv global ${RUBY_VERSION} \
+    && $HOME/.rbenv/bin/rbenv rehash \
+    && $HOME/.rbenv/shims/ruby -v
 
 #-----------------------------------------------------------------------------
 # Install Ruby with rvm (alternatives)
 #-----------------------------------------------------------------------------
 # RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
 #     && curl -sSL https://get.rvm.io | bash -s stable \
-#     && ./home/docker/.rvm/scripts/rvm install ${RUBY_VERSION} \
-#     && ./home/docker/.rvm/scripts/rvm use ${RUBY_VERSION} --default
+#     && $HOME/.rvm/scripts/rvm install ${RUBY_VERSION} \
+#     && $HOME/.rvm/scripts/rvm use ${RUBY_VERSION} --default
 #     && ./usr/bin/ruby -v
 
 #-----------------------------------------------------------------------------
@@ -44,11 +44,10 @@ COPY ./rootfs/home/docker/Gemfile.lock /tmp/Gemfile.lock
 #-----------------------------------------------------------------------------
 # Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
-ONBUILD RUN chmod a+x /tmp/gems.sh; sync \
-            && ./tmp/gems.sh
+# COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
+# RUN chmod a+x /tmp/gems.sh; sync \
+#     && ./tmp/gems.sh
 
-USER root
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
 #-----------------------------------------------------------------------------
@@ -58,7 +57,7 @@ RUN mkdir -p ${PATH_WORKSPACE} \
 #-----------------------------------------------------------------------------
 # Fixing ownership for 'docker' user
 #-----------------------------------------------------------------------------
-# RUN chown -R docker:docker ${PATH_HOME}
+RUN chown -R docker:docker ${PATH_HOME}
 
 #-----------------------------------------------------------------------------
 # Set PORT Docker Container
