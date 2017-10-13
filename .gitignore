@@ -1,5 +1,6 @@
 .data
 .env
+.project
 *.log
 *.status
 docker-compose.yml
