@@ -1,7 +1,4 @@
 SUBDIRS = \
-    base \
-    base-consul \
-    consul \
     mariadb \
     mongodb \
     nginx \
@@ -9,4 +6,4 @@ SUBDIRS = \
     postgresql \
     redis \
     ruby \
-    application 
+    application

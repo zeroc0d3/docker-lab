@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-if [ ! -z "${CONTAINER_HOST}" ] && [ ! -z "${CONTAINER_IP}" ]; then
-    rm -f /var/run/s6/container_environment/CONTAINER_HOST
-    rm -f /var/run/s6/container_environment/CONTAINER_IP
-fi

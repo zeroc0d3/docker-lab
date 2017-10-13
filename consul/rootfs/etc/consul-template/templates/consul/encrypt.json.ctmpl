@@ -1,4 +1,0 @@
-{{- $encrypt := env "CONSUL_ENCRYPT" -}}
-{
-    {{if $encrypt}}"encrypt": "{{$encrypt}}"{{end}}
-}

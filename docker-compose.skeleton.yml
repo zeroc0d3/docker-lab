@@ -6,8 +6,7 @@ services:
 # BASE
 #-------------------------------------------
   base:
-    build:
-      context: ./base
+    image: zeroc0d3lab/centos-base
     volumes:
       - /etc/localtime:/etc/localtime:ro
     #environment:
@@ -20,8 +19,7 @@ services:
 # BASE-CONSUL
 #-------------------------------------------
   base-consul:
-    build:
-      context: ./base-consul
+    image: zeroc0d3lab/centos-base-consul
     ports:
       - "1234:1234"
     volumes:
@@ -30,8 +28,8 @@ services:
       - CONSUL_AGENT=172.16.0.1                            # agent hostname
       - CONSUL_PORT=8500                                   # agent port
       - CONSUL_TLS=0                                       # enable TLS
-      - CONSUL_SERVICENAME=${CONSUL_SERVICENAME}           # service name to register
-      - CONSUL_SERVICEPORT=1234                            # service port
+      - CONSUL_BASE_SERVICENAME=${CONSUL_BASE_SERVICENAME} # service name to register
+      - CONSUL_BASE_SERVICEPORT=1234                       # service port
     networks:
       - backend
 
@@ -39,8 +37,7 @@ services:
 # CONSUL
 #-------------------------------------------
   consul:
-    build:
-      context: ./consul
+    image: zeroc0d3lab/centos-consul
     ports:
       - "${CONSUL_PORT}:8500"
     volumes:
@@ -280,14 +277,6 @@ networks:
 # VOLUME SETUP
 #-------------------------------------------------------------------
 volumes:
-  base:
-    driver: "local"
-  base-consul:
-    driver: "local"
-  consul:
-    driver: "local"
-  application:
-    driver: "local"
   mariadb:
     driver: "local"
   mongodb:
@@ -301,4 +290,6 @@ volumes:
   redis:
     driver: "local"
   ruby:
+    driver: "local"
+  application:
     driver: "local"

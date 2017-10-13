@@ -205,22 +205,22 @@ AUTOCONF = ${SHELL} /home/zeroc0d3/ZEROC0D3LAB/docker-lab/missing autoconf
 AUTOHEADER = ${SHELL} /home/zeroc0d3/ZEROC0D3LAB/docker-lab/missing autoheader
 AUTOMAKE = ${SHELL} /home/zeroc0d3/ZEROC0D3LAB/docker-lab/missing automake-1.15
 AWK = gawk
-BUILD_OPTIONS = 
-CLEAN_OPTIONS = 
+BUILD_OPTIONS =
+CLEAN_OPTIONS =
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"docker-alpine\" -DPACKAGE_TARNAME=\"docker-alpine\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"docker-alpine\ 0.1\" -DPACKAGE_BUGREPORT=\"bhuisgen@hbis.fr\" -DPACKAGE_URL=\"\" -DPACKAGE=\"docker-alpine\" -DVERSION=\"0.1\"
 DOCKER = yes
-ECHO_C = 
+ECHO_C =
 ECHO_N = -n
-ECHO_T = 
+ECHO_T =
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LIBOBJS = 
-LIBS = 
-LTLIBOBJS = 
+LIBOBJS =
+LIBS =
+LTLIBOBJS =
 MAINT = #
 MAKEINFO = ${SHELL} /home/zeroc0d3/ZEROC0D3LAB/docker-lab/missing makeinfo
 MKDIR_P = /bin/mkdir -p
@@ -229,13 +229,13 @@ PACKAGE_BUGREPORT = bhuisgen@hbis.fr
 PACKAGE_NAME = docker-alpine
 PACKAGE_STRING = docker-alpine 0.1
 PACKAGE_TARNAME = docker-alpine
-PACKAGE_URL = 
+PACKAGE_URL =
 PACKAGE_VERSION = 0.1
 PATH_SEPARATOR = :
-PULL_OPTIONS = 
-SET_MAKE = 
+PULL_OPTIONS =
+SET_MAKE =
 SHELL = /bin/bash
-STRIP = 
+STRIP =
 TAG = latest
 VERSION = 0.1
 abs_builddir = /home/zeroc0d3/ZEROC0D3LAB/docker-lab
@@ -246,14 +246,14 @@ am__leading_dot = .
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build_alias = 
+build_alias =
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host_alias = 
+host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -274,22 +274,19 @@ sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
 sysconfdir = ${prefix}/etc
-target_alias = 
-top_build_prefix = 
+target_alias =
+top_build_prefix =
 top_builddir = .
 top_srcdir = .
 SUBDIRS = \
-    base \
-    base-consul \
-		consul \
-		mariadb \
+    mariadb \
 		mongodb \
 		nginx \
 		nodejs \
 		postgresql \
 		redis \
 		ruby \
-		application 
+		application
 
 all: all-recursive
 

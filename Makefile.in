@@ -279,17 +279,14 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = \
-    base \
-    base-consul \
-		consul \
-		mariadb \
+    mariadb \
 		mongodb \
 		nginx \
 		nodejs \
 		postgresql \
 		redis \
 		ruby \
-		application 
+		application
 
 all: all-recursive
 

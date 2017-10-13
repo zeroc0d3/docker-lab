@@ -2475,7 +2475,7 @@ $as_echo "${TAG}" >&6; }
 
 
 
-ac_config_files="$ac_config_files Makefile base/Makefile base-consul/Makefile consul/Makefile mariadb/Makefile mongodb/Makefile nginx/Makefile nodejs/Makefile postgresql/Makefile redis/Makefile ruby/Makefile application/Makefile"
+ac_config_files="$ac_config_files Makefile mariadb/Makefile mongodb/Makefile nginx/Makefile nodejs/Makefile postgresql/Makefile redis/Makefile ruby/Makefile application/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3199,9 +3199,6 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-    "base/Makefile") CONFIG_FILES="$CONFIG_FILES base/Makefile" ;;
-    "base-consul/Makefile") CONFIG_FILES="$CONFIG_FILES base-consul/Makefile" ;;
-    "consul/Makefile") CONFIG_FILES="$CONFIG_FILES consul/Makefile" ;;
     "mariadb/Makefile") CONFIG_FILES="$CONFIG_FILES mariadb/Makefile" ;;
     "nginx/Makefile") CONFIG_FILES="$CONFIG_FILES nginx/Makefile" ;;
     "nodejs/Makefile") CONFIG_FILES="$CONFIG_FILES nodejs/Makefile" ;;

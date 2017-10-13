@@ -37,9 +37,6 @@ AC_ARG_VAR(PULL_OPTIONS, pull options)
 
 AC_CONFIG_FILES([
     Makefile
-    base/Makefile
-    base-consul/Makefile
-    consul/Makefile
     mariadb/Makefile
     mongodb/Makefile
     nginx/Makefile
