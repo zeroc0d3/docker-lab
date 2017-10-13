@@ -218,7 +218,7 @@ services:
     depends_on:
       - consul
     build:
-      context: ./ruby
+      context: ./centos-ruby
     ports:
       - "${RUBY_PORT}:22"
     volumes:
@@ -232,7 +232,6 @@ services:
       - CONSUL_RUBY_SERVICETAGS=dev                        # consul service tag
       - CONSUL_RUBY_SERVICEPORT=22                         # consul service port
       - CONSUL_RUBY_CHECKTYPE=tcp                          # consul health check type
-      - RUBY_MAJOR=${RUBY_MAJOR}
       - RUBY_VERSION=${RUBY_VERSION}
     networks:
       - backend
