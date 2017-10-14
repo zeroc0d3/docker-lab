@@ -1,0 +1,55 @@
+syntax enable
+
+let g:rehash256 = 1
+let g:onedark_termcolors = 256
+let g:lessspace_whitelist = ['ruby', 'vim']
+let g:lessspace_blacklist = ['python']
+
+"if has('gui_running')
+"  set background=light
+"else
+"  set background=dark
+"endif
+
+set background=dark
+
+"colorscheme solarized
+"colorscheme molokai
+"colorscheme ir_black
+"colorscheme peaksea
+"colorscheme base16-railscasts
+"colorscheme railscasts
+"colorscheme darcula
+"colorscheme dracula
+colorscheme onedark
+
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Monospace\ 9
+  elseif has("gui_photon")
+    set guifont=Monospace:s9
+  elseif has("gui_kde")
+    set guifont=Monospace/9/-1/5/50/0/0/0/1/0
+  elseif has("x11")
+    set guifont=-*-r-normal-*-*-90-*-*-m-*-*
+  else
+    set guifont=Monospace:h9:cDEFAULT
+  endif
+endif
+
+" With tmux (show fullpath filename) tab
+" references:
+" http://stackoverflow.com/questions/15123477/tmux-tabs-with-name-of-file-open-in-vim
+" -----------------------------------------
+" autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%"))
+autocmd BufEnter * call system("tmux rename-window " . expand("%:t"))
+autocmd VimLeave * call system("tmux rename-window bash")
+autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+set title
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
