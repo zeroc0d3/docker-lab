@@ -34,6 +34,21 @@ Dynamic environments for:
   - [X] yeoman
 * composer
 
+## Vim (`vundle`) Plugin
+* Run vim then
+  ```
+  :PluginInstall
+  ```
+* Update plugin vim (vundle)
+  ```
+  :PluginUpdate
+  ```
+* Via terminal
+  ```
+  vim +PluginInstall +q
+  vim +PluginUpdate +q
+  ```
+
 ## Build & Run Containers (Without `docker-compose`)
 * Build Containers
   ```
