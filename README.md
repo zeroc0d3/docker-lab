@@ -11,6 +11,29 @@ Dynamic environments for:
 * Ruby
 * Application (Workspace for NodeJS & Ruby)
 
+## Application Container Features
+* bash (+ themes)
+* oh-my-zsh (+ themes)
+* tmux (+ themes)
+* vim (+ plugins with vundle & themes)
+* rbenv / rvm
+  - [X] gem test unit (rspec, serverspec)
+  - [X] gem docker-api
+  - [X] gem sqlite3, mongoid, sequel, apktools
+  - [X] gem mysql2 (run: yum install -y mysql-devel)
+  - [X] gem pg, sequel_pg (run: yum install -y postgresql-libs postgresql-devel)
+  - [X] gem rubocop
+  - [X] [**others**](https://github.com/zeroc0d3/docker-lab/blob/master/application/rootfs/root/Gemfile)
+* npm
+  - [X] npm test unit (ChaiJS, TV4, Newman)
+* js package manager
+  - [X] yarn
+  - [X] bower
+  - [X] grunt
+  - [X] gulp
+  - [X] yeoman
+* composer
+
 ## Build & Run Containers (Without `docker-compose`)
 * Build Containers
   ```
