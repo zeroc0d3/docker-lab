@@ -44,9 +44,23 @@ COPY ./rootfs/home/docker/Gemfile.lock /tmp/Gemfile.lock
 #-----------------------------------------------------------------------------
 # Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-# COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
+COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
 # RUN chmod a+x /tmp/gems.sh; sync \
 #     && ./tmp/gems.sh
+
+#-----------------------------------------------------------------------------
+# Install ImageMagick
+#-----------------------------------------------------------------------------
+RUN yum -y install \
+           --setopt=tsflags=nodocs \
+           --disableplugin=fastestmirror \
+         ImageMagick \
+         ImageMagick-devel \
+
+#-----------------------------------------------------------------------------
+# Clean Up All Cache
+#-----------------------------------------------------------------------------
+    && yum clean all
 
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
