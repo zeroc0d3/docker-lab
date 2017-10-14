@@ -49,6 +49,21 @@ Dynamic environments for:
   vim +PluginUpdate +q
   ```
 
+## Ruby Packages Dependency
+* Path Gemfile
+  ```
+  $HOME/Gemfile
+  $HOME/Gemfile.lock
+  ```
+* Gem Installation
+  ```
+  ./tmp/gems.sh
+  ```
+* Different User Installation
+  ```
+  /bin/sh $HOME/gems.sh
+  ```
+
 ## Build & Run Containers (Without `docker-compose`)
 * Build Containers
   ```
