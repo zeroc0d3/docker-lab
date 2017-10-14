@@ -93,20 +93,22 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+### Path Ruby RBENV / RVM ###
+export RBENV="/usr/local/rbenv"
+export RVM="/usr/local/rvm"
+
 ### rbenv (Ruby) default ###
-export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$RBENV/bin:$PATH"
 eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-#export RAILS_ENV=staging
+export PATH="$RBENV/plugins/ruby-build/bin:$PATH"
+# export RAILS_ENV=staging
 
 ### rvm (Ruby) - alternative ###
-# export PATH="$PATH:$HOME/.rvm/bin"
-# source $HOME/.rvm/scripts/rvm
-# export PATH="$PATH:$HOME/.rvm/bin"
-# source $HOME/.rvm/scripts/rvm
+# export PATH="$PATH:$RVM/bin"
+# source $RVM/scripts/rvm
 
 # Set PATH alternatives using this:
-# [[ -s "$HOME/.rvm/scripts/rvm"  ]] && source "$HOME/.rvm/scripts/rvm"
+# [[ -s "$RVM/scripts/rvm"  ]] && source "$RVM/scripts/rvm"
 
 ### rvm selector ###
 # function gemdir {
