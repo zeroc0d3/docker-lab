@@ -3,7 +3,6 @@ Docker Lab (Learn Docker), this repository inspired from [**Docker Alpine**](htt
 
 ## Features
 Dynamic environments for:
-* Consul
 * MariaDB
 * MongoDB
 * Nginx
@@ -37,7 +36,7 @@ Dynamic environments for:
   ```
 * Force recreate some containers only
   ```
-  docker-compose build && docker-compose up --force-recreate consul nginx ruby postgresql mariadb mongodb redis application
+  docker-compose build && docker-compose up --force-recreate mariadb mongodb nginx nodejs postgresql redis ruby application
   ```
 * Running container only
   ```
@@ -45,7 +44,7 @@ Dynamic environments for:
   ```
 * Running some containers only
   ```
-  docker-compose up consul nginx ruby postgresql mariadb mongodb redis application
+  docker-compose up mariadb mongodb nginx nodejs postgresql redis ruby application
   ```
 
 ## Environments
