@@ -19,6 +19,7 @@ COPY ./rootfs/home/docker/.bashrc /home/docker/.bashrc
 #-----------------------------------------------------------------------------
 # Install Ruby with rbenv (default)
 #-----------------------------------------------------------------------------
+COPY ./rootfs/opt/rbenv.sh /etc/profile.d/rbenv.sh
 RUN git clone https://github.com/rbenv/rbenv.git /usr/local/rbenv \
     && git clone https://github.com/rbenv/ruby-build.git /usr/local/rbenv/plugins/ruby-build \
     && ./usr/local/rbenv/bin/rbenv install ${RUBY_VERSION} \
@@ -29,8 +30,10 @@ RUN git clone https://github.com/rbenv/rbenv.git /usr/local/rbenv \
 #-----------------------------------------------------------------------------
 # Install Ruby with rvm (alternatives)
 #-----------------------------------------------------------------------------
+# COPY ./rootfs/opt/rvm.sh /etc/profile.d/rvm.sh
 # RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
 #     && curl -sSL https://get.rvm.io | sudo bash -s stable \
+#     && sudo usermod -a -G rvm root \
 #     && sudo usermod -a -G rvm docker \
 #     && ./usr/local/rvm/scripts/rvm install ${RUBY_VERSION} \
 #     && ./usr/local/rvm/scripts/rvm use ${RUBY_VERSION} --default
@@ -39,15 +42,16 @@ RUN git clone https://github.com/rbenv/rbenv.git /usr/local/rbenv \
 #-----------------------------------------------------------------------------
 # Copy package dependencies in Gemfile
 #-----------------------------------------------------------------------------
-COPY ./rootfs/home/docker/Gemfile /tmp/Gemfile
-COPY ./rootfs/home/docker/Gemfile.lock /tmp/Gemfile.lock
+COPY ./rootfs/home/docker/Gemfile /opt/Gemfile
+COPY ./rootfs/home/docker/Gemfile.lock /opt/Gemfile.lock
 
 #-----------------------------------------------------------------------------
 # Install Ruby Packages (rbenv/rvm)
 #-----------------------------------------------------------------------------
-COPY ./rootfs/home/docker/gems.sh /tmp/gems.sh
-# RUN chmod a+x /tmp/gems.sh; sync \
-#     && ./tmp/gems.sh
+COPY ./rootfs/home/docker/gems.sh /opt/gems.sh
+# RUN chmod 777 /opt/gems.sh; sync \
+#     chmod a+x /opt/gems.sh; sync \
+#     && ./opt/gems.sh
 
 #-----------------------------------------------------------------------------
 # Install ImageMagick

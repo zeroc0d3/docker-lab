@@ -155,8 +155,8 @@ if [[ -f $THEME ]]; then
 fi
 
 ### Path Ruby RBENV / RVM ###
-# export RBENV="/usr/local/rbenv"
-# export RVM="/usr/local/rvm"
+# export RBENV=/usr/local/rbenv
+# export RVM=/usr/local/rvm
 
 ### rbenv (Ruby) default ###
 # export PATH="$RBENV/bin:$PATH"
