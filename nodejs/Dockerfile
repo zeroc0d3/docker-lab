@@ -47,6 +47,11 @@ RUN ./usr/bin/npm upgrade --global chai \
     && ./usr/bin/npm upgrade --global yo
 
 #-----------------------------------------------------------------------------
+# Move 'node_modules' To 'root' Folder
+#-----------------------------------------------------------------------------
+RUN mv /node_modules $HOME/node_modules
+
+#-----------------------------------------------------------------------------
 # Create Workspace Application Folder
 #-----------------------------------------------------------------------------
 RUN mkdir -p ${PATH_WORKSPACE} \

@@ -11,5 +11,5 @@ mkdir -p $HOME/.fonts \
   && cp $HOME/.fonts/PowerlineSymbols.otf /usr/share/fonts/local/PowerlineSymbols.otf \
   && cp $HOME/.fonts/PowerlineSymbols.otf /usr/share/fonts/PowerlineSymbols.otf \
   && cp $HOME/.config/fontconfig/conf.d/10-powerline-symbols.conf /etc/fonts/conf.d/10-powerline-symbols.conf \
-  && ./usr/bin/fc-cache -vf $HOME/.fonts/ \
-  && ./usr/bin/fc-cache -vf /usr/share/fonts
+  && /usr/bin/fc-cache -vf $HOME/.fonts/ \
+  && /usr/bin/fc-cache -vf /usr/share/fonts

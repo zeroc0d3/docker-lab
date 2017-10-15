@@ -20,24 +20,18 @@ COPY ./rootfs/home/docker/.bashrc /home/docker/.bashrc
 # Install Ruby with rbenv (default)
 #-----------------------------------------------------------------------------
 COPY ./rootfs/opt/rbenv.sh /etc/profile.d/rbenv.sh
-RUN git clone https://github.com/rbenv/rbenv.git /usr/local/rbenv \
-    && git clone https://github.com/rbenv/ruby-build.git /usr/local/rbenv/plugins/ruby-build \
-    && ./usr/local/rbenv/bin/rbenv install ${RUBY_VERSION} \
-    && ./usr/local/rbenv/bin/rbenv global ${RUBY_VERSION} \
-    && ./usr/local/rbenv/bin/rbenv rehash \
-    && ./usr/local/rbenv/shims/ruby -v
+RUN /usr/local/rbenv/bin/rbenv install ${RUBY_VERSION} \
+    && /usr/local/rbenv/bin/rbenv global ${RUBY_VERSION} \
+    && /usr/local/rbenv/bin/rbenv rehash \
+    && /usr/local/rbenv/shims/ruby -v
 
 #-----------------------------------------------------------------------------
 # Install Ruby with rvm (alternatives)
 #-----------------------------------------------------------------------------
 # COPY ./rootfs/opt/rvm.sh /etc/profile.d/rvm.sh
-# RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
-#     && curl -sSL https://get.rvm.io | sudo bash -s stable \
-#     && sudo usermod -a -G rvm root \
-#     && sudo usermod -a -G rvm docker \
-#     && ./usr/local/rvm/scripts/rvm install ${RUBY_VERSION} \
-#     && ./usr/local/rvm/scripts/rvm use ${RUBY_VERSION} --default
-#     && ./usr/bin/ruby -v
+# RUN /bin/sh /usr/local/rvm/scripts/rvm install ${RUBY_VERSION} \
+#     && /bin/sh /usr/local/rvm/scripts/rvm use ${RUBY_VERSION} --default
+#     && /bin/sh /usr/bin/ruby -v
 
 #-----------------------------------------------------------------------------
 # Copy package dependencies in Gemfile
