@@ -21,17 +21,21 @@ COPY ./rootfs/home/docker/.bashrc /home/docker/.bashrc
 #-----------------------------------------------------------------------------
 COPY ./rootfs/opt/rbenv.sh /etc/profile.d/rbenv.sh
 RUN /usr/local/rbenv/bin/rbenv install ${RUBY_VERSION} \
-    && /usr/local/rbenv/bin/rbenv global ${RUBY_VERSION} \
-    && /usr/local/rbenv/bin/rbenv rehash \
-    && /usr/local/rbenv/shims/ruby -v
+    && cd /usr/local/rbenv/bin \
+    && rbenv global ${RUBY_VERSION} \
+    && rbenv rehash \
+    && /usr/local/rbenv/shims \
+    && ruby -v
 
 #-----------------------------------------------------------------------------
 # Install Ruby with rvm (alternatives)
 #-----------------------------------------------------------------------------
 # COPY ./rootfs/opt/rvm.sh /etc/profile.d/rvm.sh
-# RUN /bin/sh /usr/local/rvm/scripts/rvm install ${RUBY_VERSION} \
-#     && /bin/sh /usr/local/rvm/scripts/rvm use ${RUBY_VERSION} --default
-#     && /bin/sh /usr/bin/ruby -v
+# RUN /usr/local/rvm/scripts/rvm install ${RUBY_VERSION} \
+#     && cd /usr/local/rvm/scripts \
+#     && rvm use ${RUBY_VERSION} --default \
+#     && cd /usr/bin \
+#     && ruby -v
 
 #-----------------------------------------------------------------------------
 # Copy package dependencies in Gemfile
