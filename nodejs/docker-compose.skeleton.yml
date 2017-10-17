@@ -1,0 +1,58 @@
+version: '3.2'
+
+services:
+
+#-------------------------------------------
+# CONSUL
+#-------------------------------------------
+  consul:
+    image: zeroc0d3lab/centos-consul
+    ports:
+      - "8500:8500"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - CONSUL_OPTIONS=${CONSUL_OPTIONS}                   # minimal server options
+
+#-------------------------------------------------------------------
+# NODEJS
+#-------------------------------------------------------------------
+  nodejs:
+    depends_on:
+      - consul
+    image: zeroc0d3lab/centos-nodejs
+    ports:
+      - "${NODEJS_PORT}:22"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${PATH_APPLICATION}:/home/docker/workspace
+    environment:
+      - CONSUL_NODEJS_AGENT=${CONSUL_NODEJS_AGENT}         # consul agent hostname/IP
+      #- CONSUL_NODEJS_PORT=8500                           # consul agent port
+      #- CONSUL_NODEJS_KEYPREFIX=path/prefix/              # consul key prefix path
+      - CONSUL_NODEJS_SERVICENAME=nodejs                   # consul service name
+      - CONSUL_NODEJS_SERVICETAGS=dev                      # consul service tag
+      - CONSUL_NODEJS_SERVICEPORT=22                       # consul service port
+      - CONSUL_NODEJS_CHECKTYPE=tcp                        # consul health check type
+      - NODE_VERSION=${NODE_VERSION}
+      - NPM_VERSION=${NPM_VERSION}
+      - YARN_VERSION=${YARN_VERSION}
+    networks:
+      - frontend
+      - backend
+
+#-------------------------------------------------------------------
+# NETWORK SETUP
+#-------------------------------------------------------------------
+networks:
+  frontend:
+    driver: "bridge"
+  backend:
+    driver: "bridge"
+
+#-------------------------------------------------------------------
+# VOLUME SETUP
+#-------------------------------------------------------------------
+volumes:
+  nodejs:
+    driver: "local"

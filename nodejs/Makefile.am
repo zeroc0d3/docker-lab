@@ -1,13 +1,10 @@
 IMAGE = dockerlab/nodejs
 
 clean-local:
-	docker rmi $(CLEAN_OPTIONS) $(IMAGE):$(TAG) || true
+	docker rmi $(IMAGE):$(TAG) $(CLEAN_OPTIONS) || true
 
-build:
-	docker build $(BUILD_OPTIONS) -t $(IMAGE):$(TAG) .
+build-local:
+	docker build -t $(IMAGE):$(TAG) $(BUILD_OPTIONS) .
 
-pull:
-	docker pull $(PULL_OPTIONS) $(IMAGE):$(TAG)
-
-push: build
-	docker push $(PUSH_OPTIONS) $(IMAGE):$(TAG)
+pull-local:
+	docker pull $(IMAGE):$(TAG) $(PULL_OPTIONS)

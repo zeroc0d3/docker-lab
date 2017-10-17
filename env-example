@@ -164,6 +164,7 @@ REDIS_PORT=6379
 #   RUBY
 # ==============================================
 RUBY_VERSION=2.3.0
+RUBY_PACKAGE=rbenv
 CONSUL_RUBY_AGENT=consul
 # CONSUL_RUBY_PORT=8500
 # CONSUL_RUBY_KEYPREFIX=path/prefix/
