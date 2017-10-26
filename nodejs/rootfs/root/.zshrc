@@ -13,10 +13,15 @@ export PATH="$HOME/bin:/usr/local/bin:$PATH:$HOME/.local/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# Path xterm-256-color
+export TERM="xterm-256color"
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+
+# ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -94,33 +99,24 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ### Path Ruby RBENV / RVM ###
-# export RBENV_ROOT="${HOME}/.rbenv"
-# export RVM_ROOT="/usr/local/rvm"
+export RBENV_ROOT="$HOME/.rbenv"
+export RVM_ROOT="/usr/local/rvm"
 
 ### rbenv (Ruby) default ###
-# if [ -d "${RBENV_ROOT}" ]; then
-#   export PATH="${RBENV_ROOT}/bin:${PATH}"
-#   eval "$(rbenv init -)"
-#   export PATH="${RBENV_ROOT}/plugins/ruby-build/bin:$PATH"
-#   # export RAILS_ENV=staging
-# fi
+if [ -d "$RBENV_ROOT" ] 
+then
+  export PATH="$RBENV_ROOT/bin:${PATH}"
+  eval "$(rbenv init -)"
+  export PATH="$RBENV_ROOT/plugins/ruby-build/bin:$PATH"
+  # export RAILS_ENV=staging
+else
+  ### rvm (Ruby) - alternative ###
+  if [ -d "$RVM_ROOT" ] 
+  then
+    export PATH="$PATH:$RVM_ROOT/bin"
+    source $RVM_ROOT/scripts/rvm
 
-### rvm (Ruby) - alternative ###
-# if [ -d "${RVM_ROOT}" ]; then
-#   export PATH="$PATH:$RVM_ROOT/bin"
-#   source $RVM_ROOT/scripts/rvm
-#
-#   # Set PATH alternatives using this:
-#   [[ -s "$RVM_ROOT/scripts/rvm"  ]] && source "$RVM_ROOT/scripts/rvm"
-#
-#   ### rvm selector ###
-#   function gemdir {
-#     if [[ -z "$1" ]] ; then
-#       echo "gemdir expects a parameter, which should be a valid RVM Ruby selector"
-#     else
-#       rvm "$1"
-#       cd $(rvm gemdir)
-#       pwd
-#     fi
-#   }
-# fi
+    # Set PATH alternatives using this:
+    [[ -s "$RVM_ROOT/scripts/rvm"  ]] && source "$RVM_ROOT/scripts/rvm"
+  fi 
+fi

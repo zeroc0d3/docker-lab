@@ -1,4 +1,4 @@
-IMAGE = zeroc0d3lab/centos-application
+IMAGE = dockerlab/application
 
 clean-local:
 	docker rmi $(IMAGE):$(TAG) $(CLEAN_OPTIONS) || true

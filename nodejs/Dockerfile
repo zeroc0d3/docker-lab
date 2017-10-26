@@ -21,35 +21,48 @@ RUN yum -y install https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.
 #-----------------------------------------------------------------------------
 # Install Javascipt Unit Test
 #-----------------------------------------------------------------------------
-RUN ./usr/bin/npm install chai \
-    && ./usr/bin/npm install tv4 \
-    && ./usr/bin/npm install newman \
+RUN /usr/bin/npm install chai \
+    && /usr/bin/npm install tv4 \
+    && /usr/bin/npm install newman \
 
 #-----------------------------------------------------------------------------
 # Install Javascipt Packages Manager
 #-----------------------------------------------------------------------------
-    && ./usr/bin/npm install --global yarn \
-    && ./usr/bin/npm install --global bower \
-    && ./usr/bin/npm install --global grunt \
-    && ./usr/bin/npm install --global gulp \
-    && ./usr/bin/npm install --global yo
+    && /usr/bin/npm install --global yarn \
+    && /usr/bin/npm install --global bower \
+    && /usr/bin/npm install --global grunt \
+    && /usr/bin/npm install --global gulp \
+    && /usr/bin/npm install --global yo
 
 #-----------------------------------------------------------------------------
 # Upgrade Javascipt Packages Manager
 #-----------------------------------------------------------------------------
-RUN ./usr/bin/npm upgrade --global chai \
-    && ./usr/bin/npm upgrade --global tv4 \
-    && ./usr/bin/npm upgrade --global newman \
-    && ./usr/bin/npm upgrade --global yarn \
-    && ./usr/bin/npm upgrade --global bower \
-    && ./usr/bin/npm upgrade --global grunt \
-    && ./usr/bin/npm upgrade --global gulp \
-    && ./usr/bin/npm upgrade --global yo
+RUN /usr/bin/npm upgrade --global chai \
+    && /usr/bin/npm upgrade --global tv4 \
+    && /usr/bin/npm upgrade --global newman \
+    && /usr/bin/npm upgrade --global yarn \
+    && /usr/bin/npm upgrade --global bower \
+    && /usr/bin/npm upgrade --global grunt \
+    && /usr/bin/npm upgrade --global gulp \
+    && /usr/bin/npm upgrade --global yo
 
 #-----------------------------------------------------------------------------
 # Move 'node_modules' To 'root' Folder
 #-----------------------------------------------------------------------------
 RUN mv /node_modules $HOME/node_modules
+
+#-----------------------------------------------------------------------------
+# Set Configuration
+#-----------------------------------------------------------------------------
+COPY rootfs/ /
+
+#-----------------------------------------------------------------------------
+# Cleanup 'root' folder
+#-----------------------------------------------------------------------------
+RUN rm -f /root/*.tar.gz \
+    && rm -f /root/*.zip \
+    && rm -f /opt/*.tar.gz \
+    && rm -f /opt/*.zip
 
 #-----------------------------------------------------------------------------
 # Create Workspace Application Folder
@@ -71,11 +84,6 @@ EXPOSE 22
 # Set Volume Application
 #-----------------------------------------------------------------------------
 VOLUME [${PATH_WORKSPACE}]
-
-#-----------------------------------------------------------------------------
-# Finalize (reconfigure)
-#-----------------------------------------------------------------------------
-COPY rootfs/ /
 
 #-----------------------------------------------------------------------------
 # Run Init Docker Container

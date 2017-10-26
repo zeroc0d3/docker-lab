@@ -13,29 +13,19 @@ services:
   ruby:
     depends_on:
       - consul
-    image: zeroc0d3lab/centos-ruby
+    build:
+      context: .
     ports:
       - "${RUBY_PORT}:22"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DATA_SAVE}/workspace:/home/docker                # volume for data
     environment:
+      - VIM_VERSION=${VIM_VERSION}
       - RUBY_VERSION=${RUBY_VERSION}
       - PATH_WORKSPACE=${PATH_WORKSPACE}
       - RUBY_PACKAGE=${RUBY_PACKAGE}
-    networks:
-      - frontend
-      - backend
-
-#-------------------------------------------------------------------
-# NETWORK SETUP
-#-------------------------------------------------------------------
-networks:
-  frontend:
-    driver: "bridge"
-  backend:
-    driver: "bridge"
-
+  
 #-------------------------------------------------------------------
 # VOLUME SETUP
 #-------------------------------------------------------------------

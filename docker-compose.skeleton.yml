@@ -29,7 +29,7 @@ services:
       - CONSUL_PORT=8500                                   # agent port
       - CONSUL_TLS=0                                       # enable TLS
       - CONSUL_BASE_SERVICENAME=${CONSUL_BASE_SERVICENAME} # service name to register
-      - CONSUL_BASE_SERVICEPORT=1234                       # service port
+      - CONSUL_BASE_SERVICEPORT=2220                       # service port
     networks:
       - backend
 
