@@ -8,9 +8,10 @@ Dynamic environments for:
 * Nginx
 * NodeJS
 * PostgreSQL
+* Python
 * Ruby
 * Vim
-* Application (Workspace for Vim, NodeJS & Ruby)
+* Application (Workspace for Vim, Python, NodeJS & Ruby)
 
 ## Application Container Features
 * bash (+ themes)
