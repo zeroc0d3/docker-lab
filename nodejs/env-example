@@ -1,0 +1,52 @@
+# ==============================================
+#   PATH FOR DATA
+# ==============================================
+DATA_SAVE=.data
+
+# ==============================================
+#   BASE (Environments)
+# ==============================================
+S6OVERLAY_VERSION=1.21.0.2
+S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+LANG=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+TERM=xterm
+
+# ==============================================
+#   BASE-CONSUL (Environments)
+# ==============================================
+BASE_CONSUL_PORT=2220
+CONSULTEMPLATE_VERSION=0.19.3
+
+# ==============================================
+#   CONSUL (Environments)
+# ==============================================
+CONSUL_VERSION=1.0.0
+
+# ==============================================
+#   APPLICATION (Environments)
+# ==============================================
+PATH_HOME=/home/docker
+PATH_WORKSPACE=/home/docker/workspace
+PATH_APPLICATION=/home/docker/workspace
+
+# ==============================================
+#   NODEJS
+# ==============================================
+CONSUL_NODEJS_AGENT=consul
+# CONSUL_NODEJS_PORT=8500
+# CONSUL_NODEJS_KEYPREFIX=path/prefix/
+CONSUL_NODEJS_SERVICENAME=nodejs
+CONSUL_NODEJS_SERVICETAGS=dev
+CONSUL_NODEJS_SERVICEPORT=22
+CONSUL_NODEJS_CHECKTYPE=tcp
+NODEJS_PORT=2223
+NODE_VERSION=7.10.1
+NPM_VERSION=4.6.1
+YARN_VERSION=1.1.0
+
+# ==============================================
+#  OPTIONAL ARGUMENTS
+# ==============================================
+CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options

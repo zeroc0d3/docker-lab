@@ -1,0 +1,58 @@
+version: '3.2'
+
+services:
+
+#-------------------------------------------
+# CONSUL
+#-------------------------------------------
+  consul:
+    image: zeroc0d3lab/centos-consul
+    ports:
+      - "8500:8500"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - CONSUL_OPTIONS=${CONSUL_OPTIONS}                   # minimal server options
+
+#-------------------------------------------------------------------
+# VIM
+#-------------------------------------------------------------------
+  vim:
+    depends_on:
+      - consul
+    image: zeroc0d3lab/centos-vim
+    ports:
+      - "${VIM_PORT}:22"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${PATH_APPLICATION}:/home/docker/workspace
+    environment:
+      - VIM_VERSION=${VIM_VERSION}
+      - LUA_VERSION=${LUA_VERSION}
+      - LUAROCKS_VERSION=${LUAROCKS_VERSION}
+      - CONSUL_VIM_AGENT=${CONSUL_VIM_AGENT}               # consul agent hostname/IP
+      #- CONSUL_VIM_PORT=8500                              # consul agent port
+      #- CONSUL_VIM_EFIX=path/prefix/                      # consul key prefix path
+      - CONSUL_VIM_NAME=vim                                # consul service name
+      - CONSUL_VIM_TAGS=dev                                # consul service tag
+      - CONSUL_VIM_PORT=22                                 # consul service port
+      - CONSUL_VIM_TYPE=tcp                                # consul health check type
+    networks:
+      - frontend
+      - backend
+
+#-------------------------------------------------------------------
+# NETWORK SETUP
+#-------------------------------------------------------------------
+networks:
+  frontend:
+    driver: "bridge"
+  backend:
+    driver: "bridge"
+
+#-------------------------------------------------------------------
+# VOLUME SETUP
+#-------------------------------------------------------------------
+volumes:
+  vim:
+    driver: "local"

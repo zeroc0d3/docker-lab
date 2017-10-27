@@ -1,4 +1,4 @@
-IMAGE = dockerlab/ruby
+IMAGE = zeroc0d3lab/centos-ruby
 
 clean-local:
 	docker rmi $(IMAGE):$(TAG) $(CLEAN_OPTIONS) || true

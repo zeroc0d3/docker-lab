@@ -211,6 +211,57 @@ services:
     networks:
       - backend
 
+#-------------------------------------------------------------------
+# VIM
+#-------------------------------------------------------------------
+  vim:
+    depends_on:
+      - consul
+    build:
+      context: ./vim
+    ports:
+      - "${VIM_PORT}:22"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${PATH_APPLICATION}:/home/docker/workspace
+    environment:
+      - VIM_VERSION=${VIM_VERSION}
+      - LUA_VERSION=${LUA_VERSION}
+      - LUAROCKS_VERSION=${LUAROCKS_VERSION}
+      - CONSUL_VIM_AGENT=${CONSUL_VIM_AGENT}               # consul agent hostname/IP
+      #- CONSUL_VIM_PORT=8500                              # consul agent port
+      #- CONSUL_VIM_EFIX=path/prefix/                      # consul key prefix path
+      - CONSUL_VIM_NAME=vim                                # consul service name
+      - CONSUL_VIM_TAGS=dev                                # consul service tag
+      - CONSUL_VIM_PORT=22                                 # consul service port
+      - CONSUL_VIM_TYPE=tcp                                # consul health check type
+    networks:
+      - backend
+
+#-------------------------------------------------------------------
+# PYTHON
+#-------------------------------------------------------------------
+  python:
+    depends_on:
+      - consul
+    build:
+      context: ./python
+    ports:
+      - "${PYTHON_PORT}:22"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${PATH_APPLICATION}:/home/docker/workspace
+    environment:
+      - CONSUL_PYTHON_AGENT=${CONSUL_PYTHON_AGENT}         # consul agent hostname/IP
+      #- CONSUL_PYTHON_PORT=8500                           # consul agent port
+      #- CONSUL_PYTHON_KEYPREFIX=path/prefix/              # consul key prefix path
+      - CONSUL_PYTHON_SERVICENAME=python                   # consul service name
+      - CONSUL_PYTHON_SERVICETAGS=dev                      # consul service tag
+      - CONSUL_PYTHON_SERVICEPORT=22                       # consul service port
+      - CONSUL_PYTHON_CHECKTYPE=tcp                        # consul health check type
+    networks:
+      - backend
+
 #-------------------------------------------
 # RUBY
 #-------------------------------------------
@@ -288,6 +339,10 @@ volumes:
   redis:
     driver: "local"
   ruby:
+    driver: "local"
+  python:
+    driver: "local"
+  vim:
     driver: "local"
   application:
     driver: "local"

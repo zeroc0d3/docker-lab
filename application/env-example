@@ -1,0 +1,65 @@
+# ==============================================
+#   PATH FOR DATA
+# ==============================================
+DATA_SAVE=.data
+
+# ==============================================
+#   BASE (Environments)
+# ==============================================
+S6OVERLAY_VERSION=1.21.0.2
+S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+LANG=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+TERM=xterm
+
+# ==============================================
+#   BASE-CONSUL (Environments)
+# ==============================================
+BASE_CONSUL_PORT=2220
+CONSULTEMPLATE_VERSION=0.19.3
+
+# ==============================================
+#   CONSUL (Environments)
+# ==============================================
+CONSUL_VERSION=1.0.0
+
+# ==============================================
+#   WORKSPACE-LITE (Environments)
+# ==============================================
+PATH_HOME=/home/docker
+PATH_WORKSPACE=/home/docker/workspace
+WORKSPACE_PORT=2222
+
+# ==============================================
+#   APPLICATION (Environments)
+# ==============================================
+PATH_HOME=/home/docker
+PATH_WORKSPACE=/home/docker/workspace
+PATH_APPLICATION=/home/docker/workspace
+APPLICATION_PORT=2223
+SSH_AUTHORIZED_KEYS=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJSmTg48jLvAnLk5e4X27Hc37bwerd/dtmZ+xeBmtLJQBjkPGajB8/fecx2R2i29ZkN4RiMOFXCw5B/DkJuxVjHenIkg15SPeGOaM6VJ+fIgzr+zs//0QSsGdjCIilcpMYL7qx3ZujQ3kS/T7oSR28w9unWO54X3N3H8T+RvCV6Jbi7NjVt97VI52KvqM/XOGClqmTz+bAQC485rpn3wHcYvRW+aWqvwYIE1xNT8PDQUEVWzlu+kcaIYjFpdl6ThUbevxuPvLaRZpXC3IxSyeInpkjvoxKtA4SGlFDwQ82zu8yrgDXEVdD0o8B4b9LWjKWeOkepdgzwpqPh1dpWkZxRloHTP6idBScphCZ/OzI1uvc9gpIK1T6h2JB0MAFuyFr16N6JitmaVlxhLNxSpbtFjMp+XIvpdkxzMyteb00v+XTJydmrw/veEW4/An1uUrzo8wEhO2TuS2BfqGXQg18cS6mQ9veZW8TFLXFr2W35/TD2Qk0nnRW6LCJ1Fo/sfviWPQ8BWVx3zFWzYURYE8kXFkLcYgWK0oXkWMNC5j2d8w/Joh5WgJkvnhyTnRdoiOoyYcULeCvnzblfxxch1nUfDPPmw6hHwC+s9wfRCc9UYql4AHNEOoiEZjzsM7zfyb5twYMj9ijfVrbfS1vipIvr9p8pfWPgbCboF4Xl2PU0w== zeroc0d3.team@gmail.com
+SSH_USER=docker
+SSH_USER_PASSWORD=docker
+SSH_USER_PASSWORD_HASHED=false
+SSH_ROOT_PASSWORD=docker
+
+CONSUL_APPLICATION_AGENT=application
+CONSUL_APPLICATION_PORT=8500
+CONSUL_APPLICATION_KEYPREFIX=path/prefix/
+CONSUL_APPLICATION_SERVICENAME=application
+CONSUL_APPLICATION_SERVICETAGS=dev
+CONSUL_APPLICATION_SERVICEPORT=22
+CONSUL_APPLICATION_CHECKTYPE=tcp
+
+OPENSSH_PASSWORDAUTHENTICATION=no
+OPENSSH_SFTPUSERS=
+OPENSSH_SFTPGROUP=sftp
+OPENSSH_SFTPGID=101
+OPENSSH_SFTPCHROOT=1
+OPENSSH_SFTPCHROOTUSERDIR=public_html
+
+# ==============================================
+#  OPTIONAL ARGUMENTS
+# ==============================================
+CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options

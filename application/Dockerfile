@@ -1,6 +1,13 @@
-FROM zeroc0d3lab/centos-base-workspace:latest
+FROM zeroc0d3lab/centos-base-workspace-lite:latest
 MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 
+#-----------------------------------------------------------------------------
+# Set Environment
+#-----------------------------------------------------------------------------
+ENV PATH_HOME=/home/docker \
+    PATH_WORKSPACE=/home/docker/workspace \
+    PATH_APPLICATION=/home/docker/workspace
+		
 #-----------------------------------------------------------------------------
 # Set Environment
 #-----------------------------------------------------------------------------
@@ -160,12 +167,14 @@ RUN mkdir -p ${PATH_WORKSPACE}
 RUN chown -R docker:docker ${PATH_HOME}
 
 #-----------------------------------------------------------------------------
-# Cleanup 'root' folder
+# Cleanup 'root', 'opt' & 'tmp' folder
 #-----------------------------------------------------------------------------
 RUN rm -f /root/*.tar.gz \
     && rm -f /root/*.zip \
     && rm -f /opt/*.tar.gz \
-    && rm -f /opt/*.zip
+    && rm -f /opt/*.zip \
+    && rm -f /tmp/*.tar.gz \
+    && rm -f /tmp/*.zip 
 
 #-----------------------------------------------------------------------------
 # Set PORT Docker Container

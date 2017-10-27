@@ -1,5 +1,5 @@
-# CentOS Application Docker (Application Container)
-[![Build Status](https://travis-ci.org/zeroc0d3lab/centos-application.svg?branch=master)](https://travis-ci.org/zeroc0d3lab/centos-application) [![](https://images.microbadger.com/badges/image/zeroc0d3lab/centos-application:latest.svg)](https://microbadger.com/images/zeroc0d3lab/centos-application:latest "Layers") [![](https://images.microbadger.com/badges/version/zeroc0d3lab/centos-application:latest.svg)](https://microbadger.com/images/zeroc0d3lab/centos-application:latest "Version") [![GitHub issues](https://img.shields.io/github/issues/zeroc0d3lab/centos-application.svg)](https://github.com/zeroc0d3lab/centos-application/issues) [![GitHub forks](https://img.shields.io/github/forks/zeroc0d3lab/centos-application.svg)](https://github.com/zeroc0d3lab/centos-application/network) [![GitHub stars](https://img.shields.io/github/stars/zeroc0d3lab/centos-application.svg)](https://github.com/zeroc0d3lab/centos-application/stargazers) [![GitHub license](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/zeroc0d3lab/centos-application/master/LICENSE)
+# CentOS Application Lite Edition Docker (Application-Lite Container)
+[![Build Status](https://travis-ci.org/zeroc0d3lab/centos-application-lite.svg?branch=master)](https://travis-ci.org/zeroc0d3lab/centos-application-lite) [![](https://images.microbadger.com/badges/image/zeroc0d3lab/centos-application-lite:latest.svg)](https://microbadger.com/images/zeroc0d3lab/centos-application-lite:latest "Layers") [![](https://images.microbadger.com/badges/version/zeroc0d3lab/centos-application-lite:latest.svg)](https://microbadger.com/images/zeroc0d3lab/centos-application-lite:latest "Version") [![GitHub issues](https://img.shields.io/github/issues/zeroc0d3lab/centos-application-lite.svg)](https://github.com/zeroc0d3lab/centos-application-lite/issues) [![GitHub forks](https://img.shields.io/github/forks/zeroc0d3lab/centos-application-lite.svg)](https://github.com/zeroc0d3lab/centos-application-lite/network) [![GitHub stars](https://img.shields.io/github/stars/zeroc0d3lab/centos-application-lite.svg)](https://github.com/zeroc0d3lab/centos-application-lite/stargazers) [![GitHub license](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/zeroc0d3lab/centos-application-lite/master/LICENSE)
 
 This docker image includes:
 
@@ -7,24 +7,6 @@ This docker image includes:
 * bash (+ themes)
 * oh-my-zsh (+ themes)
 * tmux (+ themes)
-* vim (+ plugins with vundle & themes)
-* rbenv / rvm
-  - [X] gem test unit (rspec, serverspec)
-  - [X] gem docker-api
-  - [X] gem sqlite3, mongoid, sequel, apktools
-  - [X] gem mysql2 (run: yum install -y mysql-devel)
-  - [X] gem pg, sequel_pg (run: yum install -y postgresql-libs postgresql-devel)
-  - [X] gem rubocop
-  - [X] [**others**](https://github.com/zeroc0d3lab/centos-application/blob/master/rootfs/root/Gemfile)
-* npm
-  - [X] npm test unit (ChaiJS, TV4, Newman)
-* js package manager
-  - [X] yarn
-  - [X] bower
-  - [X] grunt
-  - [X] gulp
-  - [X] yeoman
-* composer
 
 ## Configuration:
 * Generate ssh key for your access:
@@ -55,7 +37,7 @@ This docker image includes:
     ```
     docker inspect [name_container]
     ```
-    (eg: application_1)
+    (eg: application-lite_1)
 * Access ssh
   - Run:
     ```
@@ -67,21 +49,6 @@ This docker image includes:
     ```
     (password: **docker**)
 
-## Notes:
-* Run vim then
-  ```
-  :PluginInstall
-  ```
-* Update plugin vim (vundle)
-  ```
-  :PluginUpdate
-  ```
-* Via terminal
-  ```
-  vim +PluginInstall +q
-  vim +PluginUpdate +q
-  ```
-
 ## Docker Compose
 * Copy `env-example` to `.env`
 * Build & running
@@ -90,7 +57,7 @@ This docker image includes:
   ```
 * Force recreate container
   ```
-  docker-compose build && docker-compose up --force-recreate application
+  docker-compose build && docker-compose up --force-recreate application-lite
   ```
 * Running container only
   ```
@@ -116,4 +83,4 @@ You can run docker-compose for different environment with selected containers
   ```
 
 ## License
-[**GNU General Public License v2**](https://github.com/zeroc0d3lab/centos-application/blob/master/LICENSE)
+[**GNU General Public License v2**](https://github.com/zeroc0d3lab/centos-application-lite/blob/master/LICENSE)

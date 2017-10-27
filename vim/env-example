@@ -1,0 +1,52 @@
+# ==============================================
+#   PATH FOR DATA
+# ==============================================
+DATA_SAVE=.data
+
+# ==============================================
+#   BASE (Environments)
+# ==============================================
+S6OVERLAY_VERSION=1.21.0.2
+S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+LANG=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+TERM=xterm
+
+# ==============================================
+#   BASE-CONSUL (Environments)
+# ==============================================
+BASE_CONSUL_PORT=2220
+CONSULTEMPLATE_VERSION=0.19.3
+
+# ==============================================
+#   CONSUL (Environments)
+# ==============================================
+CONSUL_VERSION=1.0.0
+
+# ==============================================
+#   APPLICATION (Environments)
+# ==============================================
+PATH_HOME=/home/docker
+PATH_WORKSPACE=/home/docker/workspace
+PATH_APPLICATION=/home/docker/workspace
+
+# ==============================================
+#   VIM
+# ==============================================
+VIM_VERSION=8.0.1207
+LUA_VERSION=5.3.4
+LUAROCKS_VERSION=2.4.3
+CONSUL_VIM_AGENT=consul
+# CONSUL_VIM_PORT=8500
+# CONSUL_VIM_KEYPREFIX=path/prefix/
+CONSUL_VIM_SERVICENAME=vim
+CONSUL_VIM_SERVICETAGS=dev
+CONSUL_VIM_SERVICEPORT=22
+CONSUL_VIM_CHECKTYPE=tcp
+VIM_PORT=2224
+
+# ==============================================
+#  OPTIONAL ARGUMENTS
+# ==============================================
+CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options

@@ -1,4 +1,4 @@
-IMAGE = dockerlab/nodejs
+IMAGE = zeroc0d3lab/centos-nodejs
 
 clean-local:
 	docker rmi $(IMAGE):$(TAG) $(CLEAN_OPTIONS) || true

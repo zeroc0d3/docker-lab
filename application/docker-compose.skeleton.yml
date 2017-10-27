@@ -14,10 +14,10 @@ services:
     environment:
       - CONSUL_OPTIONS=${CONSUL_OPTIONS}                   # minimal server options
 
-  application:
+  application-lite:
     depends_on:
       - consul
-    image: zeroc0d3lab/centos-application
+    image: zeroc0d3lab/centos-application-lite
     ports:
       - "${APPLICATION_PORT}:22"
     volumes:
