@@ -1,0 +1,55 @@
+version: '3.2'
+
+services:
+
+#-------------------------------------------
+# CONSUL
+#-------------------------------------------
+  consul:
+    image: zeroc0d3lab/centos-consul
+    ports:
+      - "8500:8500"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - CONSUL_OPTIONS=${CONSUL_OPTIONS}                   # minimal server options
+
+#-------------------------------------------------------------------
+# PYTHON
+#-------------------------------------------------------------------
+  python:
+    depends_on:
+      - consul
+    image: zeroc0d3lab/centos-python
+    ports:
+      - "${PYTHON_PORT}:22"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${PATH_APPLICATION}:/home/docker/workspace
+    environment:
+      - CONSUL_PYTHON_AGENT=${CONSUL_PYTHON_AGENT}         # consul agent hostname/IP
+      #- CONSUL_PYTHON_PORT=8500                           # consul agent port
+      #- CONSUL_PYTHON_KEYPREFIX=path/prefix/              # consul key prefix path
+      - CONSUL_PYTHON_SERVICENAME=python                   # consul service name
+      - CONSUL_PYTHON_SERVICETAGS=dev                      # consul service tag
+      - CONSUL_PYTHON_SERVICEPORT=22                       # consul service port
+      - CONSUL_PYTHON_CHECKTYPE=tcp                        # consul health check type
+    networks:
+      - frontend
+      - backend
+
+#-------------------------------------------------------------------
+# NETWORK SETUP
+#-------------------------------------------------------------------
+networks:
+  frontend:
+    driver: "bridge"
+  backend:
+    driver: "bridge"
+
+#-------------------------------------------------------------------
+# VOLUME SETUP
+#-------------------------------------------------------------------
+volumes:
+  python:
+    driver: "local"

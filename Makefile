@@ -284,8 +284,10 @@ SUBDIRS = \
 		nginx \
 		nodejs \
 		postgresql \
+		python \
 		redis \
 		ruby \
+		vim \
 		application
 
 all: all-recursive

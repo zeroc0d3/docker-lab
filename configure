@@ -2475,7 +2475,7 @@ $as_echo "${TAG}" >&6; }
 
 
 
-ac_config_files="$ac_config_files Makefile mariadb/Makefile mongodb/Makefile nginx/Makefile nodejs/Makefile postgresql/Makefile redis/Makefile ruby/Makefile application/Makefile"
+ac_config_files="$ac_config_files Makefile mariadb/Makefile mongodb/Makefile nginx/Makefile nodejs/Makefile postgresql/Makefile python/Makefile redis/Makefile ruby/Makefile vim/Makefile application/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -3203,8 +3203,10 @@ do
     "nginx/Makefile") CONFIG_FILES="$CONFIG_FILES nginx/Makefile" ;;
     "nodejs/Makefile") CONFIG_FILES="$CONFIG_FILES nodejs/Makefile" ;;
     "postgresql/Makefile") CONFIG_FILES="$CONFIG_FILES postgresql/Makefile" ;;
+    "python/Makefile") CONFIG_FILES="$CONFIG_FILES python/Makefile" ;;
     "redis/Makefile") CONFIG_FILES="$CONFIG_FILES redis/Makefile" ;;
     "ruby/Makefile") CONFIG_FILES="$CONFIG_FILES ruby/Makefile" ;;
+    "vim/Makefile") CONFIG_FILES="$CONFIG_FILES vim/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

@@ -1,0 +1,49 @@
+# ==============================================
+#   PATH FOR DATA
+# ==============================================
+DATA_SAVE=.data
+
+# ==============================================
+#   BASE (Environments)
+# ==============================================
+S6OVERLAY_VERSION=1.21.0.2
+S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+LANG=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+TERM=xterm
+
+# ==============================================
+#   BASE-CONSUL (Environments)
+# ==============================================
+BASE_CONSUL_PORT=2220
+CONSULTEMPLATE_VERSION=0.19.3
+
+# ==============================================
+#   CONSUL (Environments)
+# ==============================================
+CONSUL_VERSION=1.0.0
+
+# ==============================================
+#   APPLICATION (Environments)
+# ==============================================
+PATH_HOME=/home/docker
+PATH_WORKSPACE=/home/docker/workspace
+PATH_APPLICATION=/home/docker/workspace
+
+# ==============================================
+#   PYTHON
+# ==============================================
+CONSUL_PYTHON_AGENT=consul
+# CONSUL_PYTHON_PORT=8500
+# CONSUL_PYTHON_KEYPREFIX=path/prefix/
+CONSUL_PYTHON_SERVICENAME=python
+CONSUL_PYTHON_SERVICETAGS=dev
+CONSUL_PYTHON_SERVICEPORT=22
+CONSUL_PYTHON_CHECKTYPE=tcp
+PYTHON_PORT=2225
+
+# ==============================================
+#  OPTIONAL ARGUMENTS
+# ==============================================
+CONSUL_OPTIONS=-server -bootstrap-expect 1 -client 0.0.0.0 -ui    # minimal server options

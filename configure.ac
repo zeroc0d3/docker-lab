@@ -42,8 +42,10 @@ AC_CONFIG_FILES([
     nginx/Makefile
     nodejs/Makefile
     postgresql/Makefile
+    python/Makefile
     redis/Makefile
     ruby/Makefile
+    vim/Makefile
     application/Makefile
 ])
 
