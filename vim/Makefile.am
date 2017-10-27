@@ -1,4 +1,4 @@
-IMAGE = zeroc0d3lab/centos-vim
+IMAGE = dockerlab/vim
 
 clean-local:
 	docker rmi $(IMAGE):$(TAG) $(CLEAN_OPTIONS) || true

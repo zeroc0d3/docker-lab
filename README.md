@@ -9,7 +9,8 @@ Dynamic environments for:
 * NodeJS
 * PostgreSQL
 * Ruby
-* Application (Workspace for NodeJS & Ruby)
+* Vim
+* Application (Workspace for Vim, NodeJS & Ruby)
 
 ## Application Container Features
 * bash (+ themes)
@@ -32,7 +33,6 @@ Dynamic environments for:
   - [X] grunt
   - [X] gulp
   - [X] yeoman
-* composer
 
 ## Vim (`vundle`) Plugin
 * Run vim then
