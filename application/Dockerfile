@@ -10,6 +10,29 @@ ENV PATH_HOME=/home/docker \
 		
 USER root
 #-----------------------------------------------------------------------------
+# Install Application Dependency
+#-----------------------------------------------------------------------------
+RUN yum -y install \
+      --setopt=tsflags=nodocs \
+      --disableplugin=fastestmirror \
+        gcc \
+        gcc-c++ \
+        kernel-devel \
+        readline-dev \
+        ncurses \
+        ncurse-devel \
+        lua-devel \ 
+        lzo-devel \
+        vim* 
+
+RUN yum -y install ImageMagick ImageMagick-devel
+
+#-----------------------------------------------------------------------------
+# Clean Up All Cache
+#-----------------------------------------------------------------------------
+RUN yum clean all
+
+#-----------------------------------------------------------------------------
 # Set Configuration
 #-----------------------------------------------------------------------------
 COPY rootfs/ /

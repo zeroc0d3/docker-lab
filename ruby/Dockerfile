@@ -28,6 +28,8 @@ RUN yum -y install \
         lzo-devel \
         vim* 
 
+RUN yum -y install ImageMagick ImageMagick-devel
+
 #-----------------------------------------------------------------------------
 # Clean Up All Cache
 #-----------------------------------------------------------------------------
