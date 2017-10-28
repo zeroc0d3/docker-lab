@@ -99,6 +99,14 @@ RUN git clone https://github.com/dracula/vim.git /opt/vim-themes/dracula \
 RUN tar zcvf vim.tar.gz /root/vim /root/.vim \
     && mv vim.tar.gz /opt
 
+# -----------------------------------------------------------------------------
+# UTC Timezone & Networking
+# -----------------------------------------------------------------------------
+RUN ln -sf \
+		/usr/share/zoneinfo/UTC \
+		/etc/localtime \
+	&& echo "NETWORKING=yes" > /etc/sysconfig/network
+
 #-----------------------------------------------------------------------------
 # Set Configuration
 #-----------------------------------------------------------------------------

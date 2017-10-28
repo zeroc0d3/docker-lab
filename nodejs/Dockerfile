@@ -8,6 +8,22 @@ ENV PATH_HOME=/home/docker \
     PATH_WORKSPACE=/home/docker/workspace
 
 #-----------------------------------------------------------------------------
+# Install NodeJS Dependency
+#-----------------------------------------------------------------------------
+RUN yum -y install \
+      --setopt=tsflags=nodocs \
+      --disableplugin=fastestmirror \
+        gcc \
+        gcc-c++ \
+        kernel-devel \
+        readline-dev \
+        ncurses \
+        ncurse-devel \
+        lua-devel \ 
+        lzo-devel \
+        vim* 
+
+#-----------------------------------------------------------------------------
 # Install NodeJS
 #-----------------------------------------------------------------------------
 # RUN yum -y install nodejs npm --enablerepo=epel \
@@ -50,6 +66,14 @@ RUN /usr/bin/npm upgrade --global chai \
 # Move 'node_modules' To 'root' Folder
 #-----------------------------------------------------------------------------
 RUN mv /node_modules $HOME/node_modules
+
+# -----------------------------------------------------------------------------
+# UTC Timezone & Networking
+# -----------------------------------------------------------------------------
+RUN ln -sf \
+		/usr/share/zoneinfo/UTC \
+		/etc/localtime \
+	&& echo "NETWORKING=yes" > /etc/sysconfig/network
 
 #-----------------------------------------------------------------------------
 # Set Configuration

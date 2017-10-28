@@ -8,6 +8,22 @@ ENV PATH_HOME=/home/docker \
     PATH_WORKSPACE=/home/docker/workspace
 
 #-----------------------------------------------------------------------------
+# Install Ruby Dependency
+#-----------------------------------------------------------------------------
+RUN yum -y install \
+      --setopt=tsflags=nodocs \
+      --disableplugin=fastestmirror \
+        gcc \
+        gcc-c++ \
+        kernel-devel \
+        readline-dev \
+        ncurses \
+        ncurse-devel \
+        lua-devel \ 
+        lzo-devel \
+        vim* 
+
+#-----------------------------------------------------------------------------
 # Install Python 3.5
 #-----------------------------------------------------------------------------
 RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -39,6 +55,14 @@ RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
 # Clean Up All Cache
 #-----------------------------------------------------------------------------
 RUN yum clean all
+
+# -----------------------------------------------------------------------------
+# UTC Timezone & Networking
+# -----------------------------------------------------------------------------
+RUN ln -sf \
+		/usr/share/zoneinfo/UTC \
+		/etc/localtime \
+	&& echo "NETWORKING=yes" > /etc/sysconfig/network
 
 #-----------------------------------------------------------------------------
 # Set Configuration

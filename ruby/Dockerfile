@@ -4,10 +4,7 @@ MAINTAINER ZeroC0D3 Team <zeroc0d3.team@gmail.com>
 #-----------------------------------------------------------------------------
 # Set Environment
 #-----------------------------------------------------------------------------
-ENV VIM_VERSION=8.0.1207 \
-    LUA_VERSION=5.3.4 \
-    LUAROCKS_VERSION=2.4.3 \
-    RUBY_VERSION=2.4.2 \
+ENV RUBY_VERSION=2.4.2 \
     PATH_HOME=/home/docker \
     PATH_WORKSPACE=/home/docker/workspace
 
@@ -15,6 +12,27 @@ ENV RUBY_PACKAGE="rbenv"
     # ("rbenv" = using rbenv package manager, "rvm" = using rvm package manager)
 
 USER root
+#-----------------------------------------------------------------------------
+# Install Ruby Dependency
+#-----------------------------------------------------------------------------
+RUN yum -y install \
+      --setopt=tsflags=nodocs \
+      --disableplugin=fastestmirror \
+        gcc \
+        gcc-c++ \
+        kernel-devel \
+        readline-dev \
+        ncurses \
+        ncurse-devel \
+        lua-devel \ 
+        lzo-devel \
+        vim* 
+
+#-----------------------------------------------------------------------------
+# Clean Up All Cache
+#-----------------------------------------------------------------------------
+RUN yum clean all
+
 #-----------------------------------------------------------------------------
 # Prepare Install Ruby
 # -) copy .zshrc to /root

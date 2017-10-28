@@ -20,10 +20,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${DATA_SAVE}/workspace:/home/docker                # volume for data
     environment:
-      - VIM_VERSION=${VIM_VERSION}
       - RUBY_VERSION=${RUBY_VERSION}
-      - PATH_WORKSPACE=${PATH_WORKSPACE}
       - RUBY_PACKAGE=${RUBY_PACKAGE}
+      - PATH_WORKSPACE=${PATH_WORKSPACE}
     networks:
       - frontend
       - backend
