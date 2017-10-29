@@ -1,3 +1,8 @@
+version 3.4
+====================
+- Add title script 
+- Change name container application from 'application-lite' to 'application'
+
 version 3.3
 ====================
 - Add installation docker container for ImageMagick (container vim, ruby & application)

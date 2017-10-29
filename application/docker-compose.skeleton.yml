@@ -14,7 +14,7 @@ services:
     environment:
       - CONSUL_OPTIONS=${CONSUL_OPTIONS}                   # minimal server options
 
-  application-lite:
+  application:
     depends_on:
       - consul
     image: zeroc0d3lab/centos-application-lite
