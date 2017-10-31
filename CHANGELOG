@@ -24,6 +24,7 @@ version 3.2
 version 3.1
 ====================
 - Update for new snapshot running Ruby Docker
+
 version 3.0
 ====================
 - Update all Dockerfile for fixing installation
@@ -46,7 +47,7 @@ version 2.7
 
 version 2.6
 ====================
-- Update docker-compose skeletaon configuration
+- Update docker-compose skeleton configuration
 
 version 2.5
 ====================
@@ -59,7 +60,7 @@ version 2.4
 
 version 2.3
 ====================
-- Change container imaget to:
+- Change container image to:
   "FROM zeroc0d3lab/centos-base-workspace-lite:latest"
 
 version 2.2
