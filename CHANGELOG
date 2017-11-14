@@ -1,6 +1,7 @@
 ## version 3.5.3
 ======================
 * Change environment script from `#!/bin/sh` to `#!/usr/bin/env sh`
+* Change version docker builder script from 1.1 to 1.2
 
 ## version 3.5.2
 ======================
