@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 DATE=`date '+%Y-%m-%d %H:%M:%S'`
 DEFAULT_VERSION='8.0.1207'

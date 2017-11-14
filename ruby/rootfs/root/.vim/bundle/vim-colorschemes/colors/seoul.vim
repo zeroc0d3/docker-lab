@@ -42,7 +42,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   hi Special              ctermfg=28  ctermbg=0
 
   hi Comment              ctermfg=84
-  hi PreProc              ctermfg=15    "#!/bin/sh
+  hi PreProc              ctermfg=15    "#!/usr/bin/env sh
 
   hi rubyStringDelimiter  ctermfg=27
   hi rubySymbol           ctermfg=27

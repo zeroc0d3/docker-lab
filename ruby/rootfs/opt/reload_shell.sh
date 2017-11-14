@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 WHAT_SHELL=`$SHELL -c 'echo $0'`
 if [ "$WHAT_SHELL" = "`which zsh`" ] || [ "$WHAT_SHELL" = "zsh" ]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Docker entrypoint (pid 1), run as root
 [ "$1" = "mongod" ] || exec "$@" || exit $?
 
