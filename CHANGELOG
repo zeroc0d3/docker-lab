@@ -1,3 +1,7 @@
+## version 3.5.4
+======================
+* Update installation node packages
+
 ## version 3.5.3
 ======================
 * Change environment script from `#!/bin/sh` to `#!/usr/bin/env sh`
