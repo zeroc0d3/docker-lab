@@ -37,14 +37,14 @@ RUN yum -y install https://kojipkgs.fedoraproject.org//packages/http-parser/2.7.
 #-----------------------------------------------------------------------------
 # Install Javascipt Unit Test
 #-----------------------------------------------------------------------------
-RUN /usr/bin/npm install chai \
-    && /usr/bin/npm install tv4 \
-    && /usr/bin/npm install newman \
+RUN /usr/bin/npm install --global chai \
+    && /usr/bin/npm install --global tv4 \
+    && /usr/bin/npm install --global newman 
 
 #-----------------------------------------------------------------------------
 # Install Javascipt Packages Manager
 #-----------------------------------------------------------------------------
-    && /usr/bin/npm install --global yarn \
+RUN /usr/bin/npm install --global yarn \
     && /usr/bin/npm install --global bower \
     && /usr/bin/npm install --global grunt \
     && /usr/bin/npm install --global gulp \
