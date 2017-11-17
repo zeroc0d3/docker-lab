@@ -62,11 +62,6 @@ RUN /usr/bin/npm upgrade --global chai \
     && /usr/bin/npm upgrade --global gulp \
     && /usr/bin/npm upgrade --global yo
 
-#-----------------------------------------------------------------------------
-# Move 'node_modules' To 'root' Folder
-#-----------------------------------------------------------------------------
-RUN mv /node_modules $HOME/node_modules
-
 # -----------------------------------------------------------------------------
 # UTC Timezone & Networking
 # -----------------------------------------------------------------------------
